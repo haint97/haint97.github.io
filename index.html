@@ -396,9 +396,10 @@
                     <h3>AWS Certified Solutions Architect</h3>
                     <p class="education-institution">Amazon Web Services</p>
                     <p class="education-date">Certification: SAA-C03</p>
-                    <p class="education-details"><a
-                            href="https://aws.amazon.com/certification/certified-solutions-architect-associate/"
-                            class="credential-link" target="_blank">View Certification</a></p>
+                    <p class="education-details"><a href="#" class="credential-link"
+                            data-cert-img="https://via.placeholder.com/400x300?text=Certificate+Image"
+                            data-cert-link="https://aws.amazon.com/certification/certified-solutions-architect-associate/">View
+                            Certification</a></p>
                 </div>
 
                 <!-- Certification 2 -->
@@ -407,7 +408,9 @@
                     <h3>SQL Nanodegree</h3>
                     <p class="education-institution">Udacity</p>
                     <p class="education-date">Completed</p>
-                    <p class="education-details"><a href="#" class="credential-link">View Certificate</a></p>
+                    <p class="education-details"><a href="#" class="credential-link"
+                            data-cert-img="https://www.coursera.org/account/accomplishments/specialization/certificate/7T7FP3FT5DB6"
+                            data-cert-link="#">View Certificate</a></p>
                 </div>
 
                 <!-- Certification 3 -->
@@ -416,7 +419,9 @@
                     <h3>Data Structures</h3>
                     <p class="education-institution">UC San Diego (Coursera)</p>
                     <p class="education-date">Completed</p>
-                    <p class="education-details"><a href="#" class="credential-link">View Certificate</a></p>
+                    <p class="education-details"><a href="#" class="credential-link"
+                            data-cert-img="https://www.coursera.org/account/accomplishments/specialization/certificate/7T7FP3FT5DB6"
+                            data-cert-link="#">View Certificate</a></p>
                 </div>
 
                 <!-- Certification 4 -->
@@ -425,11 +430,25 @@
                     <h3>Generative AI for Software Developers</h3>
                     <p class="education-institution">IBM</p>
                     <p class="education-date">Completed</p>
-                    <p class="education-details"><a
-                            href="https://www.coursera.org/account/accomplishments/specialization/7T7FP3FT5DB6"
-                            class="credential-link" target="_blank">View Certificate</a></p>
+                    <p class="education-details"><a href="#" class="credential-link"
+                            data-cert-img="https://www.coursera.org/account/accomplishments/specialization/certificate/7T7FP3FT5DB6"
+                            data-cert-link="https://www.coursera.org/account/accomplishments/specialization/7T7FP3FT5DB6">View
+                            Certificate</a></p>
                 </div>
             </div>
+            <!-- Certificate Popup Modal -->
+            <div id="certificateModal" class="certificate-modal" style="display:none;">
+                <div class="certificate-modal-content">
+                    <span class="certificate-modal-close" id="certificateModalClose">&times;</span>
+                    <img id="certificateModalImg" src="" alt="Certificate Image"
+                        style="max-width:100%;height:auto;display:block;margin:0 auto 1rem auto;" />
+                    <div style="text-align:center;">
+                        <a id="certificateModalLink" href="#" target="_blank"
+                            style="color:var(--color-primary);font-weight:600;">View Certificate Link</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     </section>
 

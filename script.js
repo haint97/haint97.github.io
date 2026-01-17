@@ -1,4 +1,52 @@
 // ============================================================================
+// CERTIFICATE MODAL HANDLING
+// ============================================================================
+
+class CertificateModal {
+    constructor() {
+        this.modal = document.getElementById('certificateModal');
+        this.img = document.getElementById('certificateModalImg');
+        this.link = document.getElementById('certificateModalLink');
+        this.closeBtn = document.getElementById('certificateModalClose');
+        this.credentialLinks = document.querySelectorAll('.credential-link');
+        this.init();
+    }
+
+    init() {
+        this.credentialLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const imgSrc = link.getAttribute('data-cert-img');
+                const certLink = link.getAttribute('data-cert-link');
+                this.openModal(imgSrc, certLink);
+            });
+        });
+        this.closeBtn.addEventListener('click', () => this.closeModal());
+        window.addEventListener('click', (e) => {
+            if (e.target === this.modal) {
+                this.closeModal();
+            }
+        });
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.modal.style.display === 'flex') {
+                this.closeModal();
+            }
+        });
+    }
+
+    openModal(imgSrc, certLink) {
+        this.img.src = imgSrc || '';
+        this.link.href = certLink || '#';
+        this.modal.style.display = 'flex';
+    }
+
+    closeModal() {
+        this.modal.style.display = 'none';
+        this.img.src = '';
+        this.link.href = '#';
+    }
+}
+// ============================================================================
 // THEME MANAGEMENT
 // ============================================================================
 
@@ -492,6 +540,7 @@ function init() {
     new KeyboardNavigation();
     new CopyToClipboard();
     new PerformanceMonitor();
+    new CertificateModal();
 
     console.log('Portfolio website initialized successfully');
 }
