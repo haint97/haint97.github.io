@@ -22,9 +22,13 @@ window.addEventListener('load', function () {
 const certModal = document.getElementById('certModal');
 const certModalClose = document.getElementById('certModalClose');
 const certImage = document.getElementById('certImage');
+const certVerifyLink = document.getElementById('certVerifyLink');
+const certModalIcon = document.getElementById('certModalIcon');
+const certModalIssuer = document.getElementById('certModalIssuer');
 const achievementBadges = document.querySelectorAll('.achievement-badge[data-cert]');
+const certificationCards = document.querySelectorAll('.cert-card[data-cert-verify]');
 
-// Open modal on achievement badge click
+// Open modal on achievement badge click (for award badges)
 achievementBadges.forEach(badge => {
     badge.addEventListener('click', function () {
         const certFile = this.getAttribute('data-cert');
@@ -51,6 +55,9 @@ achievementBadges.forEach(badge => {
 
         // Update modal title
         document.getElementById('certModalTitle').textContent = certName;
+        certModalIcon.textContent = '🏆';
+        certModalIssuer.textContent = 'Achievement';
+        certVerifyLink.style.display = 'none';
 
         // Show modal
         certModal.classList.add('show');
@@ -60,6 +67,49 @@ achievementBadges.forEach(badge => {
 
     // Add keyboard support
     badge.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            this.click();
+        }
+    });
+});
+
+// Open modal on certification card click
+certificationCards.forEach(card => {
+    card.addEventListener('click', function (e) {
+        e.preventDefault();
+        const certName = this.getAttribute('data-cert-name');
+        const certIcon = this.getAttribute('data-cert-icon');
+        const certIssuer = this.getAttribute('data-cert-issuer');
+        const verifyUrl = this.getAttribute('data-cert-verify');
+        const certImageFile = this.getAttribute('data-cert-image');
+
+        // Update modal content
+        document.getElementById('certModalTitle').textContent = certName;
+        certModalIcon.textContent = certIcon;
+        certModalIssuer.textContent = certIssuer;
+
+        // Show/hide image based on whether image file exists
+        if (certImageFile) {
+            certImage.src = `certs/${certImageFile}`;
+            certImage.alt = certName;
+            certImage.style.display = 'block';
+        } else {
+            certImage.style.display = 'none';
+        }
+
+        // Show and update verify link
+        certVerifyLink.href = verifyUrl;
+        certVerifyLink.style.display = 'inline-block';
+
+        // Show modal
+        certModal.classList.add('show');
+        certModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    });
+
+    // Add keyboard support
+    card.addEventListener('keypress', function (e) {
         if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             this.click();
@@ -176,7 +226,6 @@ document.querySelectorAll('section, .experience-item, .cert-card, .skill-categor
 });
 
 // ==================== NAVBAR SCROLL EFFECT ====================
-let lastScrollTop = 0;
 const navbar = document.querySelector('.navbar');
 
 window.addEventListener('scroll', () => {
@@ -188,8 +237,6 @@ window.addEventListener('scroll', () => {
     } else {
         navbar.style.boxShadow = 'none';
     }
-
-    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
 });
 
 // ==================== DYNAMIC CODE SNIPPETS ====================
@@ -216,7 +263,6 @@ function generateCodeBackground() {
 }
 
 generateCodeBackground();
-
 // ==================== FLOATING CARD INTERACTION ====================
 const floatingCards = document.querySelectorAll('.floating-card');
 
@@ -235,9 +281,9 @@ floatingCards.forEach(card => {
 // ==================== PARALLAX EFFECT FOR CODE BACKGROUND ====================
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
-    const codeSnippets = document.querySelectorAll('.code-snippet');
+    const codeBackground = document.querySelectorAll('.code-snippet');
 
-    codeSnippets.forEach((snippet, index) => {
+    codeBackground.forEach((snippet, index) => {
         const speed = 0.5 + (index * 0.1);
         snippet.style.transform = `translateY(${scrolled * speed}px)`;
     });

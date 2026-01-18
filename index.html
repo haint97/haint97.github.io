@@ -338,33 +338,44 @@
             <h2 class="section-title" data-aos="fade-up">Certifications & <span class="accent-text">Achievements</span>
             </h2>
             <div class="certs-grid">
-                <a href="https://aws.amazon.com/certification/certified-solutions-architect-associate/"
-                    class="cert-card" target="_blank" data-aos="zoom-in" data-aos-delay="100" rel="noopener noreferrer">
+                <button class="cert-card" role="button"
+                    aria-label="AWS Certified Solutions Architect - Click to view and verify"
+                    data-cert-name="AWS Certified Solutions Architect" data-cert-icon="☁️" data-cert-issuer="AWS"
+                    data-cert-verify="https://www.credly.com/badges/34b9ed42-8404-4f80-ae94-08d3966c9b9d"
+                    data-cert-image="AWS Certified Solutions Architect.png" data-aos="zoom-in" data-aos-delay="100">
                     <div class="cert-icon">☁️</div>
                     <h3>AWS Certified Solutions Architect</h3>
                     <p>SAA-C03</p>
-                </a>
+                </button>
 
-                <a href="https://www.udacity.com/course/sql-for-data-analysis--ud198" class="cert-card" target="_blank"
-                    data-aos="zoom-in" data-aos-delay="150" rel="noopener noreferrer">
+                <button class="cert-card" role="button" aria-label="SQL Nanodegree Program - Click to view and verify"
+                    data-cert-name="SQL Nanodegree Program" data-cert-icon="📊" data-cert-issuer="Udacity"
+                    data-cert-verify="https://www.udacity.com/certificate/TFQLFKGX"
+                    data-cert-image="SQL Nanodegree Program.png" data-aos="zoom-in" data-aos-delay="150">
                     <div class="cert-icon">📊</div>
-                    <h3>SQL Nanodegree</h3>
+                    <h3>SQL Nanodegree Program</h3>
                     <p>Udacity</p>
-                </a>
+                </button>
 
-                <a href="https://www.coursera.org/learn/data-structures" class="cert-card" target="_blank"
-                    data-aos="zoom-in" data-aos-delay="200" rel="noopener noreferrer">
+                <button class="cert-card" role="button" aria-label="Data Structures - Click to view and verify"
+                    data-cert-name="Data Structures" data-cert-icon="🏗️" data-cert-issuer="UC San Diego (Coursera)"
+                    data-cert-verify="coursera.org/verify/9PRRDWUH63JC" data-aos="zoom-in"
+                    data-cert-image="data-structure.png" data-aos-delay="200">
                     <div class="cert-icon">🏗️</div>
                     <h3>Data Structures</h3>
                     <p>UC San Diego (Coursera)</p>
-                </a>
+                </button>
 
-                <a href="https://www.coursera.org/account/accomplishments/specialization/7T7FP3FT5DB6" class="cert-card"
-                    target="_blank" data-aos="zoom-in" data-aos-delay="250" rel="noopener noreferrer">
+                <button class="cert-card" role="button"
+                    aria-label="Generative AI for Software Developers - Click to view and verify"
+                    data-cert-name="Generative AI for Software Developers" data-cert-icon="🤖"
+                    data-cert-issuer="IBM (Coursera)"
+                    data-cert-verify="https://coursera.org/verify/specialization/7T7FP3FT5DB6" data-aos="zoom-in"
+                    data-cert-image="Generative AI for Software Developers.png" data-aos-delay="250">
                     <div class="cert-icon">🤖</div>
                     <h3>Generative AI for Software Developers</h3>
                     <p>IBM</p>
-                </a>
+                </button>
             </div>
         </div>
     </section>
@@ -394,16 +405,6 @@
                     Feel free to reach out!
                 </p>
                 <div class="contact-methods">
-                    <a href="tel:+6589463599" class="contact-link" data-aos="zoom-in" data-aos-delay="150">
-                        <div class="contact-icon-wrapper">
-                            <span class="contact-icon">📞</span>
-                        </div>
-                        <div class="contact-text">
-                            <p class="contact-label">Phone</p>
-                            <p class="contact-value">+65 8946 3599</p>
-                        </div>
-                    </a>
-
                     <a href="mailto:nguyenthaihai00@gmail.com" class="contact-link" data-aos="zoom-in"
                         data-aos-delay="200">
                         <div class="contact-icon-wrapper">
@@ -444,12 +445,17 @@
             <button class="cert-modal-close" aria-label="Close certificate modal" id="certModalClose">
                 <span aria-hidden="true">&times;</span>
             </button>
-            <h2 id="certModalTitle">Certificate</h2>
+            <div class="cert-modal-header">
+                <span class="cert-modal-icon" id="certModalIcon">☁️</span>
+                <h2 id="certModalTitle">Certificate</h2>
+                <p id="certModalIssuer" class="cert-modal-issuer">Issuer</p>
+            </div>
             <div class="cert-modal-body">
                 <img id="certImage" src="" alt="Certificate" class="cert-image">
             </div>
             <div class="cert-modal-footer">
-                <!-- View only - no download -->
+                <a id="certVerifyLink" href="" target="_blank" rel="noopener noreferrer" class="btn btn-primary">🔗
+                    Verify Certificate</a>
             </div>
         </div>
     </div>
