@@ -94,8 +94,8 @@ function closeCertModal() {
 const themeToggle = document.getElementById('themeToggle');
 const htmlElement = document.documentElement;
 
-// Check for saved theme preference or default to light mode
-const currentTheme = localStorage.getItem('theme') || 'light';
+// Check for saved theme preference or default to dark mode
+const currentTheme = localStorage.getItem('theme') || 'dark';
 htmlElement.setAttribute('data-theme', currentTheme);
 updateThemeIcon(currentTheme);
 // Set initial ARIA state
