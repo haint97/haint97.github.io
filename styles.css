@@ -345,7 +345,7 @@ body {
     }
 
     .nav-menu.active {
-        max-height: 400px;
+        max-height: 100vh;
     }
 
     .nav-item {
@@ -1367,9 +1367,6 @@ section {
         gap: 0.5rem;
     }
 
-    .nav-item:nth-child(n+3):not(:last-child) {
-        display: none;
-    }
 
     /* Improve modal on mobile */
     .cert-modal-content {
