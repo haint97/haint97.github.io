@@ -32,6 +32,11 @@
                 <span class="logo-text">Thai Hai</span>
                 <span class="logo-bracket">/&gt;</span>
             </div>
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
             <ul class="nav-menu" id="navMenu" role="menubar">
                 <li class="nav-item" role="none">
                     <a href="#home" class="nav-link" role="menuitem">Home</a>
@@ -51,8 +56,7 @@
                 <li class="nav-item" role="none">
                     <a href="#contact" class="nav-link" role="menuitem">Contact</a>
                 </li>
-
-                <li class="nav-item" role="none">
+                <li class="nav-item theme-item" role="none">
                     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" role="switch"
                         aria-checked="false">
                         <span class="moon-icon" aria-hidden="true">🌙</span>
@@ -233,13 +237,28 @@
                     </div>
                     <div class="exp-content">
                         <ul class="exp-list">
-                            <li>Led design and development of financial microservice that processed <span class="highlight">multi-million user batches</span> for national tax collections by integrating ABS and multiple payment channels into a resilient distributed system.</li>
-                            <li>Achieved <span class="highlight">100% auditability and zero data loss</span> for national financial reconciliations by applying Event Sourcing, Event Streaming, resulting in a system capable of capturing and replaying every financial transaction, strict compliance with regulatory standards.</li>
-                            <li>Boosted system performance by <span class="highlight">25%</span>, significantly reduced processing latency by identifying bottlenecks and implementing parallel execution, query optimization, and efficient partitioning across distributed nodes.</li>
-                            <li>Reduced maintenance overhead by 20%, accelerated project timelines by 30% through the design and development of a library of reusable components.</li>
-                            <li>Improved batch processing of large datasets via parallel execution and query optimization, increasing data handling efficiency by 40%, essential for managing million-record financial transactions.</li>
-                            <li>Led system architecture reviews and technical design sessions, defining sequence diagrams, database schema, event topics, and domain models. This ensured adherence to DDD, event-driven architecture, and CQRS principles.</li>
-                            <li>Decreased incident resolution time (MTTR) by implementing root cause analysis, developing walk-through solutions and recovery strategies, and establishing proactive system monitoring, which minimized system downtime for critical national services.</li>
+                            <li>Led design and development of financial microservice that processed multi-million user
+                                batches for national tax collections by integrating ABS and multiple payment channels
+                                into a resilient distributed system.</li>
+                            <li>Applied Event Sourcing, Event Streaming to solve for <span class="highlight">100%
+                                    auditability</span> requirements in national financial reconciliations, resulting in
+                                a system capable of capturing and replaying every financial transaction with zero data
+                                loss, ensuring strict compliance with national standards.</li>
+                            <li>Boosted system performance by <span class="highlight">25%</span>, significantly reduced
+                                processing latency by identifying bottlenecks and implementing parallel execution, query
+                                optimization, and efficient partitioning across
+                                distributed nodes.</li>
+                            <li>Reduced maintenance overhead by 20%, accelerated project timelines by 30% through the
+                                design and development of a library of reusable components.</li>
+                            <li>Improved batch processing of large datasets via parallel execution and query
+                                optimization, increasing data handling efficiency by 40%, essential for managing
+                                million-record financial transactions.</li>
+                            <li>Led system architecture reviews and technical design sessions, defining sequence
+                                diagrams, database schema, event topics, and domain models. This ensured adherence to
+                                DDD, event-driven architecture, and CQRS principles.</li>
+                            <li>Decreased incident resolution time (MTTR) by implementing root cause analysis,
+                                developing walk-through solutions and recovery strategies, and establishing proactive
+                                system monitoring, which minimized system downtime for critical national services.</li>
                         </ul>
                         <div class="achievements">
                             <button class="achievement-badge" role="button"
