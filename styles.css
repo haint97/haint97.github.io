@@ -506,10 +506,39 @@ body {
     justify-content: center;
 }
 
+.floating-card-fun {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    backdrop-filter: blur(10px);
+    animation: floating 3s ease-in-out infinite;
+}
+
 .floating-card {
     position: absolute;
-    width: 120px;
-    height: 120px;
+    width: 80px;
+    height: 80px;
+    background: rgba(0, 255, 136, 0.1);
+    border: 2px solid var(--primary-color);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    backdrop-filter: blur(10px);
+    animation: floating 3s ease-in-out infinite;
+}
+
+.floating-card-small {
+    position: absolute;
+    width: 20px;
+    height: 20px;
     background: rgba(0, 255, 136, 0.1);
     border: 2px solid var(--primary-color);
     border-radius: 12px;
@@ -537,8 +566,22 @@ body {
     animation-delay: 0.5s;
 }
 
+.card-6 {
+    top: 100px;
+    right: 0;
+    animation-delay: 0.5s;
+}
+
+
 .card-3 {
     bottom: 0;
+    left: 50px;
+    animation-delay: 1s;
+}
+
+
+.card-5 {
+    bottom: 50px;
     left: 50px;
     animation-delay: 1s;
 }
