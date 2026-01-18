@@ -1,0 +1,110 @@
+\documentclass[a4paper,10.9pt,hidelinks]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[
+  top=0.15in,
+  bottom=0.1in,
+  left=0.2in,
+  right=0.2in
+]{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{setspace}
+
+% Define colors
+\definecolor{headercolor}{RGB}{0, 51, 102}
+
+% Customize section headings without numbering
+\titleformat{\section}{\large\bfseries\color{headercolor}}{}{0em}{}[\hrule height 0.8pt]
+\titlespacing*{\section}{0pt}{2pt}{4pt}
+
+% Customize subsection headings without numbering
+\titleformat{\subsection}{\normalsize\bfseries}{}{0em}{}
+\titlespacing*{\subsection}{0pt}{2pt}{2pt}
+\usepackage{tabularx}
+% Customize itemize to use hyphens
+\setlist[itemize]{leftmargin=*,itemsep=0pt,parsep=0pt,topsep=0pt,label=-}
+
+% No page numbers
+\pagestyle{empty}
+
+\begin{document}
+% Set increased line spacing (e.g., 1.2x) globally for body text
+\setstretch{1.23}
+
+\begin{center}
+    {\normalsize\bfseries Hai Nguyen Thai} \\
+    {+65 89463599} \ $|$ \ {nguyenthaihai00@gmail.com} \ $|$ \ \href{https://linkedin.com/in/haint97}{linkedin.com/in/haint97}
+\end{center}
+
+\section{Technical Skills}
+\begin{itemize}
+    \item \textbf{Distributed Systems \& Architecture:} Event-Driven Architecture (EDA), Event Sourcing, Domain-Driven Design (DDD), CQRS, Microservices
+    \item \textbf{Languages:} C\# (.NET Core), JavaScript (Node.js, Angular), Python
+    \item \textbf{Backend \& Messaging:} Entity Framework, Dapper, Kafka, Serverless, RESTful APIs, gRPC, WebSocket
+    \item \textbf{Cloud \& DevOps:} AWS (Lambda, SQS, S3, CloudWatch, API Gateway), Azure (AppInsights,Database, Blob), Docker
+    \item \textbf{Databases \& Storage:} MS SQL Server, PostgreSQL, DynamoDB,MongoDB ,Redis
+\end{itemize}
+
+\section{Professional Experience}
+
+\subsection{NCS (IRAS) $|$ Singapore \hfill \normalfont{Jun 2022 -- Present}}
+\textbf{Back-end Leader / Senior Software Engineer}
+\begin{itemize}
+    \item Led design and development of financial microservice that processed multi-million user batches for national tax collections by integrating ABS and multiple payment channels into a resilient distributed system.
+    \item Applied Event Sourcing, Event Streaming to solve for 100\% auditability requirements in national financial reconciliations, this resulted in a system capable of capturing and replaying every financial transaction with zero data loss, ensuring strict compliance with national standards
+    \item Boosted system performance by 25\%, significantly reduced processing latency by identifying bottlenecks and implementing parallel execution and query optimizations
+    \item Reduced maintenance overhead by 20\%, accelerated project timelines by 30\% through the design and development of a library of reusable components
+    \item Improved batch processing of large datasets via parallel execution and query optimization, increasing data handling efficiency by 40\%, essential for managing million-record financial transactions.
+    \item Led system architecture reviews and technical design sessions, defining sequence diagrams, database schema, event topics, and domain models. This ensured adherence to DDD, event-driven architecture, and CQRS principles
+    \item Decreased incident resolution time (MTTR) by implementing root cause analysis, developing walk-through solutions and recovery strategies, and establishing proactive system monitoring, which minimized system downtime for critical national services
+    \begin{itemize}
+        \item \textbf{Best Quality Award}: For maintaining technical excellence and delivering high-quality outcomes
+    \end{itemize}
+
+\end{itemize}
+\subsection{FPT Software $|$ \normalfont{Vietnam} \hfill \normalfont{Mar 2020 -- May 2022}}
+\textbf{Technical Architect / Senior Software Engineer}
+\begin{itemize}
+    \item Improved application responsiveness by 20\% through deep database optimization involving materialized views, partitioning, indexing, execution plan tuning and caching optimizations
+    \item Designed and built data-driven enterprise dashboard and analytics applications to fulfill diverse business needs, from descriptive analytics to advanced forecasting, empowering data-driven decision-making across the organization
+    \item Led software architecture design and conducted proofs of concept (PoCs) for new technologies to ensure alignment with business goals and resolved technological challenges across various projects
+    \item Managed a 30 engineer cross-functional unit across five microservices teams to deliver complex enterprise features under aggressive timelines, resulting in 100\% on-time delivery and a 98\% customer satisfaction (CSAT) score
+    \item Increased team operational efficiency by 30\% by collaborating with product managers to redefine technical requirement workflows and feature prioritization
+    \item Reduced release cycle times by 50\% by implementing automated CI/CD pipelines in Azure DevOps
+    \begin{itemize}
+        \item \textbf{Top Performer}: Ranked top 10 out of 400 engineers in the unit, FHM.EMU
+        \item \textbf{Platinum Member}: Recognized as part of the top 3\% of FPT Software engineers for outstanding contributions
+    \end{itemize}
+\end{itemize}
+
+\subsection{Rikkeisoft $|$ \normalfont{Vietnam} \hfill \normalfont{May 2019 -- Oct 2019}}
+\textbf{Software Engineer}
+\begin{itemize}
+    \item Built a multi-platform ad integration system for Google and Facebook, improving ad performance by 30\%.
+    \item Developed an OpenCV-Python-based video processing solution to detect inactive conveyor rollers, reducing downtime.
+\end{itemize}
+
+\section{Education}
+\textbf{Posts and Telecommunications Institute of Technology, Vietnam} \hfill Sep 2015 -- Feb 2020 \\
+Bachelor of Engineering in Information Systems $\textbf{|}$ Degree classification: Good
+
+\section{Certifications}
+\begin{tabularx}{\linewidth}{X X}
+\href{https://aws.amazon.com/certification/certified-solutions-architect-associate/}{- AWS Certified Solutions Architect, SAA-C03}
+&
+\href{https://www.udacity.com/course/sql-for-data-analysis--ud198}{- SQL Nanodegree, Udacity}
+\\
+\href{https://www.coursera.org/learn/data-structures}{- Data Structures, UC San Diego (Coursera)}
+&
+\href{https://www.coursera.org/account/accomplishments/specialization/7T7FP3FT5DB6}{- Generative AI for Software Developers, IBM}
+\\
+
+\end{tabularx}
+
+
+
+\end{document}
