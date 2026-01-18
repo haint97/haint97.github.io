@@ -475,7 +475,3 @@ a11yStyle.textContent = `
 `;
 document.head.appendChild(a11yStyle);
 
-// ==================== CONSOLE EASTER EGG ====================
-console.log('%c🚀 Welcome to Hai Nguyen Thai\'s Portfolio!', 'color: #00ff88; font-size: 20px; font-weight: bold; text-shadow: 0 0 20px #00ff88;');
-console.log('%cLet\'s build something amazing together!', 'color: #00ff88; font-size: 14px;');
-console.log('%cFeel free to explore the code and reach out at nguyenthaihai00@gmail.com', 'color: #00ff88; font-size: 12px;');
