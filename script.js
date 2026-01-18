@@ -94,22 +94,15 @@ function closeCertModal() {
 const themeToggle = document.getElementById('themeToggle');
 const htmlElement = document.documentElement;
 
-// Check for saved theme preference or default to dark mode
-const currentTheme = localStorage.getItem('theme') || 'dark';
-htmlElement.setAttribute('data-theme', currentTheme);
-updateThemeIcon(currentTheme);
-// Set initial ARIA state
-themeToggle.setAttribute('aria-checked', currentTheme === 'dark' ? 'true' : 'false');
+// Always default to dark mode - no localStorage
+htmlElement.setAttribute('data-theme', 'dark');
+themeToggle.setAttribute('aria-checked', 'true');
 
 themeToggle.addEventListener('click', () => {
     const theme = htmlElement.getAttribute('data-theme');
     const newTheme = theme === 'light' ? 'dark' : 'light';
 
     htmlElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-    updateThemeIcon(newTheme);
-
-    // Update ARIA state
     themeToggle.setAttribute('aria-checked', newTheme === 'dark' ? 'true' : 'false');
 });
 
