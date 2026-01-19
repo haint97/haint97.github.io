@@ -4,17 +4,17 @@
     --primary-dark: #00cc6f;
     --primary-light: #33ff99;
 
-    --bg-light: #ffffff;
-    --bg-light-secondary: #f8f9fa;
-    --bg-light-tertiary: #eeeeee;
+    --bg-light: #f7fafc;
+    --bg-light-secondary: #f0f2f5;
+    --bg-light-tertiary: #e5e7eb;
 
-    --text-light: #1a1a1a;
-    --text-light-secondary: #4a4a4a;
-    --text-light-tertiary: #7a7a7a;
+    --text-light: #181c20;
+    --text-light-secondary: #2d3748;
+    --text-light-tertiary: #4a5568;
 
-    --border-light: rgba(0, 0, 0, 0.08);
-    --shadow-light: 0 12px 48px rgba(0, 0, 0, 0.12);
-    --shadow-light-lg: 0 20px 64px rgba(0, 0, 0, 0.15);
+    --border-light: rgba(0, 0, 0, 0.13);
+    --shadow-light: 0 8px 32px rgba(0, 0, 0, 0.10);
+    --shadow-light-lg: 0 16px 48px rgba(0, 0, 0, 0.13);
 
     --bg-dark: #0a0e27;
     --bg-dark-secondary: #1a1f3a;
@@ -56,6 +56,9 @@
     --text-tertiary: var(--text-light-tertiary);
     --border: var(--border-light);
     --shadow: var(--shadow-light);
+    --primary-color: #009e5f;
+    --primary-dark: #00784a;
+    --primary-light: #33ff99;
 }
 
 /* ==================== RESET & BASE STYLES ==================== */
@@ -505,7 +508,6 @@ body {
     align-items: center;
     justify-content: center;
 }
-
 .floating-card-fun,
 .floating-card.card-fun {
     position: absolute;
@@ -545,13 +547,15 @@ body {
 
 .floating-card-small {
     position: absolute;
-    width: 32px;
-    height: 32px;
+    width: 20px;
+    height: 20px;
+    background: rgba(0, 255, 136, 0.1);
+    border: 2px solid var(--primary-color);
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: 700;
     color: var(--primary-color);
     backdrop-filter: blur(10px);
@@ -598,19 +602,14 @@ body {
     animation-delay: 0.5s;
 }
 
-/* (merged above) */
-
-/* Extra specificity to ensure no background or blur on desktop for fun cards */
-.floating-card-fun{
-    background: none !important;
-    border: none !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    padding: 0 !important;
-    width: auto !important;
-    height: auto !important;
-    backdrop-filter: none !important;
-
+.floating-card.card-fun {
+    background: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+    font-weight: 400;
+    color: var(--primary-color);
 }
 
 @keyframes floating {
@@ -701,8 +700,10 @@ body {
         height: 50px;
         font-size: 1rem;
     }
-    .floating-card-fun,
-    .floating-card.card-fun {
+
+    .floating-card-fun {
+        width: 0;
+        height: 0;
         font-size: 1.5rem;
     }
 }
@@ -1047,49 +1048,52 @@ section {
 }
 
 @media (max-width: 768px) {
-    .hero-title {
-        font-size: 2.2rem;
+    .exp-header {
+        flex-direction: column;
     }
-    .hero-subtitle {
-        font-size: 1.1rem;
-    }
-    .hero-visual {
-        height: 240px;
+
+    .exp-date {
+        white-space: normal;
     }
     .floating-card {
         width: 48px;
         height: 48px;
         font-size: 1.1rem;
     }
+
     .floating-card-small {
         width: 20px;
         height: 20px;
         font-size: 2rem;
     }
+
     .floating-card-fun,
     .floating-card.card-fun {
         font-size: 1.1rem;
     }
 }
 
-@media (max-width: 480px) {
-    .hero-visual {
-        height: 160px;
-    }
-    .floating-card {
-        width: 32px;
-        height: 32px;
-        font-size: 0.8rem;
-    }
-    .floating-card-small {
-        width: 14px;
-        height: 14px;
-        font-size: 1.5rem;
-    }
-    .floating-card-fun,
-    .floating-card.card-fun {
-        font-size: 0.8rem;
-    }
+/* ==================== CERTIFICATIONS SECTION ==================== */
+.certifications {
+    background: var(--bg);
+}
+
+.certs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.cert-card {
+    background: rgba(0, 255, 136, 0.05);
+    border: 1px solid var(--primary-color);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    text-decoration: none;
+    transition: var(--transition);
+    display: block;
 }
 
 .cert-card:hover {
