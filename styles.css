@@ -506,7 +506,8 @@ body {
     justify-content: center;
 }
 
-.floating-card-fun {
+.floating-card-fun,
+.floating-card.card-fun {
     position: absolute;
     display: flex;
     align-items: center;
@@ -514,8 +515,15 @@ body {
     font-size: 2rem;
     font-weight: 700;
     color: var(--primary-color);
-    backdrop-filter: blur(10px);
     animation: floating 3s ease-in-out infinite;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    backdrop-filter: none !important;
 }
 
 .floating-card {
@@ -537,15 +545,13 @@ body {
 
 .floating-card-small {
     position: absolute;
-    width: 20px;
-    height: 20px;
-    background: rgba(0, 255, 136, 0.1);
-    border: 2px solid var(--primary-color);
+    width: 32px;
+    height: 32px;
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: var(--primary-color);
     backdrop-filter: blur(10px);
@@ -592,14 +598,19 @@ body {
     animation-delay: 0.5s;
 }
 
-.floating-card.card-fun {
-    background: none;
-    border: none;
-    box-shadow: none;
-    border-radius: 0;
-    padding: 0;
-    font-weight: 400;
-    color: var(--primary-color);
+/* (merged above) */
+
+/* Extra specificity to ensure no background or blur on desktop for fun cards */
+.floating-card-fun{
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    backdrop-filter: none !important;
+
 }
 
 @keyframes floating {
@@ -690,9 +701,8 @@ body {
         height: 50px;
         font-size: 1rem;
     }
-    .floating-card-fun {
-        width: 0;
-        height: 0;
+    .floating-card-fun,
+    .floating-card.card-fun {
         font-size: 1.5rem;
     }
 }
@@ -1037,36 +1047,49 @@ section {
 }
 
 @media (max-width: 768px) {
-    .exp-header {
-        flex-direction: column;
+    .hero-title {
+        font-size: 2.2rem;
     }
-
-    .exp-date {
-        white-space: normal;
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    .hero-visual {
+        height: 240px;
+    }
+    .floating-card {
+        width: 48px;
+        height: 48px;
+        font-size: 1.1rem;
+    }
+    .floating-card-small {
+        width: 20px;
+        height: 20px;
+        font-size: 2rem;
+    }
+    .floating-card-fun,
+    .floating-card.card-fun {
+        font-size: 1.1rem;
     }
 }
 
-/* ==================== CERTIFICATIONS SECTION ==================== */
-.certifications {
-    background: var(--bg);
-}
-
-.certs-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-}
-
-.cert-card {
-    background: rgba(0, 255, 136, 0.05);
-    border: 1px solid var(--primary-color);
-    border-radius: 12px;
-    padding: 2rem;
-    text-align: center;
-    backdrop-filter: blur(10px);
-    text-decoration: none;
-    transition: var(--transition);
-    display: block;
+@media (max-width: 480px) {
+    .hero-visual {
+        height: 160px;
+    }
+    .floating-card {
+        width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
+    }
+    .floating-card-small {
+        width: 14px;
+        height: 14px;
+        font-size: 1.5rem;
+    }
+    .floating-card-fun,
+    .floating-card.card-fun {
+        font-size: 0.8rem;
+    }
 }
 
 .cert-card:hover {
