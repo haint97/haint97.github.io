@@ -489,6 +489,7 @@ document.addEventListener('keydown', (e) => {
             'a': '#about',
             's': '#skills',
             'e': '#experience',
+            'p': '#projects',
             'c': '#contact'
         };
 
@@ -562,4 +563,25 @@ a11yStyle.textContent = `
     }
 `;
 document.head.appendChild(a11yStyle);
+
+// ==================== PROJECT DEMO BUTTONS ====================
+const projectDemoButtons = document.querySelectorAll('.btn-project-demo');
+
+projectDemoButtons.forEach(button => {
+    button.addEventListener('click', function() {
+        const demoType = this.getAttribute('data-demo');
+
+        // Placeholder for demo functionality
+        // In a real implementation, this could open a modal with:
+        // - Screenshots/videos of the project
+        // - Live demo iframe
+        // - Interactive walkthrough
+
+        alert(`Demo for ${demoType} would be displayed here.\n\nYou can replace this with:\n- A modal showing project screenshots\n- An embedded video demo\n- A link to a live demo\n- An interactive project walkthrough`);
+
+        // Example: You could add a modal similar to the certificate modal
+        // or redirect to a demo page
+        // window.open(`/demos/${demoType}.html`, '_blank');
+    });
+});
 
