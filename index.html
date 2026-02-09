@@ -392,34 +392,35 @@
             </p>
             <div class="projects-grid">
 
-                <!-- Project 1: Event-Driven Task Manager -->
+                <!-- Project 1: LLM Telegram Bot -->
                 <div class="project-card" data-aos="zoom-in" data-aos-delay="100">
                     <div class="project-header">
-                        <div class="project-icon">📋</div>
-                        <h3 class="project-title">Event-Driven Task Manager</h3>
+                        <div class="project-icon">🤖</div>
+                        <h3 class="project-title">LLM Telegram Bot</h3>
                     </div>
                     <p class="project-description">
-                        A distributed task management system built with Event Sourcing and CQRS patterns.
-                        Features real-time collaboration, complete audit trails, and scalable microservices architecture.
+                        An intelligent Telegram chatbot powered by local LLM running on LM Studio with OpenAI API integration for advanced conversational AI capabilities with privacy-focused local model execution.
+                        Features conversation management (/clear, /history, /reset), custom personas (/persona, /systemprompt),
+                        and real-time streaming responses with typing indicators for enhanced user experience.
                     </p>
                     <div class="project-tech">
-                        <span class="tech-tag">C#</span>
-                        <span class="tech-tag">Kafka</span>
-                        <span class="tech-tag">Event Sourcing</span>
-                        <span class="tech-tag">CQRS</span>
-                        <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">OpenAI</span>
+                        <span class="tech-tag">Telegram</span>
+                        <span class="tech-tag">LM Studio</span>
+                        <span class="tech-tag">LLM</span>
                     </div>
                     <div class="project-actions">
-                        <button class="btn-project-demo" data-demo="task-manager" aria-label="View Task Manager Demo">
+                        <button class="btn-project-demo" data-demo="llm-telegram-bot" data-video="pet-projects/llm-tegegram-bot/LLM Telegram bot.mov" aria-label="View LLM Telegram Bot Demo">
                             <span class="demo-icon">🎬</span> View Demo
                         </button>
-                        <a href="#" class="btn-project-link" target="_blank" rel="noopener noreferrer" aria-label="View Task Manager on GitHub">
+                        <!-- <a href="#" class="btn-project-link" target="_blank" rel="noopener noreferrer" aria-label="View LLM Telegram Bot on GitHub">
                             <span class="link-icon">🔗</span> GitHub
-                        </a>
+                        </a> -->
                     </div>
                 </div>
 
-                <!-- Project 2: Real-Time Analytics Dashboard -->
+                <!-- Project 2: Real-Time Analytics Dashboard
                 <div class="project-card" data-aos="zoom-in" data-aos-delay="200">
                     <div class="project-header">
                         <div class="project-icon">📊</div>
@@ -445,8 +446,9 @@
                         </a>
                     </div>
                 </div>
+                -->
 
-                <!-- Project 3: Serverless Image Processing Pipeline -->
+                <!-- Project 3: Serverless Image Processing Pipeline
                 <div class="project-card" data-aos="zoom-in" data-aos-delay="300">
                     <div class="project-header">
                         <div class="project-icon">🖼️</div>
@@ -472,8 +474,8 @@
                         </a>
                     </div>
                 </div>
-
-                <!-- Project 4: Distributed Cache System -->
+                -->
+                <!-- Project 4: Distributed Cache System
                 <div class="project-card" data-aos="zoom-in" data-aos-delay="400">
                     <div class="project-header">
                         <div class="project-icon">⚡</div>
@@ -499,7 +501,7 @@
                         </a>
                     </div>
                 </div>
-
+                -->
             </div>
         </div>
     </section>
@@ -630,6 +632,24 @@
             <div class="cert-modal-footer">
                 <a id="certVerifyLink" href="" target="_blank" rel="noopener noreferrer" class="btn btn-primary">🔗
                     Verify Certificate</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Demo Modal -->
+    <div id="projectDemoModal" class="cert-modal" role="dialog" aria-labelledby="projectDemoTitle" aria-hidden="true">
+        <div class="cert-modal-content">
+            <button class="cert-modal-close" aria-label="Close project demo modal" id="projectDemoClose">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="cert-modal-header">
+                <span class="cert-modal-icon" id="projectDemoIcon">🎬</span>
+                <h2 id="projectDemoTitle">Project Demo</h2>
+            </div>
+            <div class="cert-modal-body">
+                <video id="projectDemoVideo" controls class="cert-image" style="width: 100%; max-height: 70vh;">
+                    Your browser does not support the video tag.
+                </video>
             </div>
         </div>
     </div>

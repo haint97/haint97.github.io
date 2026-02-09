@@ -566,22 +566,67 @@ document.head.appendChild(a11yStyle);
 
 // ==================== PROJECT DEMO BUTTONS ====================
 const projectDemoButtons = document.querySelectorAll('.btn-project-demo');
+const projectDemoModal = document.getElementById('projectDemoModal');
+const projectDemoClose = document.getElementById('projectDemoClose');
+const projectDemoVideo = document.getElementById('projectDemoVideo');
+const projectDemoTitle = document.getElementById('projectDemoTitle');
 
 projectDemoButtons.forEach(button => {
     button.addEventListener('click', function() {
         const demoType = this.getAttribute('data-demo');
+        const videoPath = this.getAttribute('data-video');
 
-        // Placeholder for demo functionality
-        // In a real implementation, this could open a modal with:
-        // - Screenshots/videos of the project
-        // - Live demo iframe
-        // - Interactive walkthrough
+        if (videoPath) {
+            // Show video modal
+            projectDemoVideo.src = videoPath;
+            projectDemoTitle.textContent = this.closest('.project-card').querySelector('.project-title').textContent;
+            projectDemoModal.classList.add('show');
+            projectDemoModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
 
-        alert(`Demo for ${demoType} would be displayed here.\n\nYou can replace this with:\n- A modal showing project screenshots\n- An embedded video demo\n- A link to a live demo\n- An interactive project walkthrough`);
-
-        // Example: You could add a modal similar to the certificate modal
-        // or redirect to a demo page
-        // window.open(`/demos/${demoType}.html`, '_blank');
+            // Auto-play video
+            projectDemoVideo.play().catch(err => {
+                console.log('Auto-play prevented:', err);
+            });
+        } else {
+            // Placeholder for demo functionality
+            alert(`Demo for ${demoType} would be displayed here.\n\nYou can replace this with:\n- A modal showing project screenshots\n- An embedded video demo\n- A link to a live demo\n- An interactive project walkthrough`);
+        }
     });
 });
 
+// Close project demo modal
+if (projectDemoClose) {
+    projectDemoClose.addEventListener('click', closeProjectDemoModal);
+}
+
+// Close modal on outside click
+if (projectDemoModal) {
+    projectDemoModal.addEventListener('click', function (e) {
+        if (e.target === projectDemoModal) {
+            closeProjectDemoModal();
+        }
+    });
+}
+
+// Close modal on escape key
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && projectDemoModal && projectDemoModal.classList.contains('show')) {
+        closeProjectDemoModal();
+    }
+});
+
+function closeProjectDemoModal() {
+    if (projectDemoModal) {
+        projectDemoModal.classList.remove('show');
+        projectDemoModal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = 'auto';
+
+        // Stop and reset video
+        if (projectDemoVideo) {
+            projectDemoVideo.pause();
+            projectDemoVideo.currentTime = 0;
+            projectDemoVideo.src = '';
+        }
+    }
+}
