@@ -60,6 +60,87 @@ const certModalIcon = document.getElementById('certModalIcon');
 const certModalIssuer = document.getElementById('certModalIssuer');
 const achievementBadges = document.querySelectorAll('.achievement-badge[data-cert]');
 const certificationCards = document.querySelectorAll('.cert-card[data-cert-verify]');
+const focusableSelector = [
+    'a[href]',
+    'button:not([disabled])',
+    'textarea:not([disabled])',
+    'input:not([disabled])',
+    'select:not([disabled])',
+    '[tabindex]:not([tabindex="-1"])'
+].join(', ');
+
+let activeModal = null;
+let lastModalTrigger = null;
+
+function getFocusableElements(container) {
+    return Array.from(container.querySelectorAll(focusableSelector))
+        .filter(el => !el.hasAttribute('disabled') && el.getAttribute('aria-hidden') !== 'true');
+}
+
+function openModalDialog(modal, triggerEl, focusEl) {
+    lastModalTrigger = triggerEl instanceof HTMLElement ? triggerEl : document.activeElement;
+    activeModal = modal;
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    const nextFocus = focusEl || getFocusableElements(modal)[0] || modal;
+    requestAnimationFrame(() => {
+        if (nextFocus && typeof nextFocus.focus === 'function') {
+            nextFocus.focus();
+        }
+    });
+}
+
+function closeModalDialog(modal, options = {}) {
+    const { returnFocus = true } = options;
+
+    if (!modal) return;
+
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden', 'true');
+
+    if (activeModal === modal) {
+        activeModal = null;
+    }
+
+    document.body.style.overflow = 'auto';
+
+    if (returnFocus && lastModalTrigger instanceof HTMLElement && document.contains(lastModalTrigger)) {
+        requestAnimationFrame(() => lastModalTrigger.focus());
+    }
+
+    if (returnFocus) {
+        lastModalTrigger = null;
+    }
+}
+
+document.addEventListener('keydown', function (e) {
+    if (!activeModal || e.key !== 'Tab') return;
+
+    const focusableElements = getFocusableElements(activeModal);
+    if (!focusableElements.length) {
+        e.preventDefault();
+        return;
+    }
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    if (!activeModal.contains(document.activeElement)) {
+        e.preventDefault();
+        firstElement.focus();
+        return;
+    }
+
+    if (e.shiftKey && document.activeElement === firstElement) {
+        e.preventDefault();
+        lastElement.focus();
+    } else if (!e.shiftKey && document.activeElement === lastElement) {
+        e.preventDefault();
+        firstElement.focus();
+    }
+});
 
 // Open modal on achievement badge click (for award badges)
 achievementBadges.forEach(badge => {
@@ -92,10 +173,7 @@ achievementBadges.forEach(badge => {
         certModalIssuer.textContent = 'Achievement';
         certVerifyLink.style.display = 'none';
 
-        // Show modal
-        certModal.classList.add('show');
-        certModal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
+        openModalDialog(certModal, this, certModalClose);
     });
 
     // Add keyboard support
@@ -135,10 +213,7 @@ certificationCards.forEach(card => {
         certVerifyLink.href = verifyUrl;
         certVerifyLink.style.display = 'inline-block';
 
-        // Show modal
-        certModal.classList.add('show');
-        certModal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
+        openModalDialog(certModal, this, certModalClose);
     });
 
     // Add keyboard support
@@ -168,9 +243,7 @@ document.addEventListener('keydown', function (e) {
 });
 
 function closeCertModal() {
-    certModal.classList.remove('show');
-    certModal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = 'auto';
+    closeModalDialog(certModal);
 }
 
 // ==================== THEME TOGGLE ====================
@@ -251,7 +324,7 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 // Observe all major elements for fade-in animation
-document.querySelectorAll('section, .experience-item, .cert-card, .skill-category, .stat-card').forEach(el => {
+document.querySelectorAll('section, .experience-item, .cert-card, .skill-category').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(20px)';
     el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
@@ -532,27 +605,26 @@ const projectDemoTitle = document.getElementById('projectDemoTitle');
 
 projectDemoButtons.forEach(button => {
     button.addEventListener('click', function() {
-        const demoType = this.getAttribute('data-demo');
-        const videoPath = this.getAttribute('data-video');
-
-        if (videoPath) {
-            // Show video modal
-            projectDemoVideo.src = videoPath;
-            projectDemoTitle.textContent = this.closest('.project-card').querySelector('.project-title').textContent;
-            projectDemoModal.classList.add('show');
-            projectDemoModal.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
-
-            // Auto-play video
-            projectDemoVideo.play().catch(err => {
-                console.log('Auto-play prevented:', err);
-            });
-        } else {
-            // Placeholder for demo functionality
-            alert(`Demo for ${demoType} would be displayed here.\n\nYou can replace this with:\n- A modal showing project screenshots\n- An embedded video demo\n- A link to a live demo\n- An interactive project walkthrough`);
-        }
+        openProjectDemo(this);
     });
 });
+
+function openProjectDemo(button) {
+    const demoType = button.getAttribute('data-demo');
+    const videoPath = button.getAttribute('data-video');
+
+    if (videoPath) {
+        projectDemoVideo.src = videoPath;
+        projectDemoTitle.textContent = button.closest('.project-card').querySelector('.project-title').textContent;
+        openModalDialog(projectDemoModal, button, projectDemoClose);
+
+        projectDemoVideo.play().catch(err => {
+            console.log('Auto-play prevented:', err);
+        });
+    } else {
+        alert(`Demo for ${demoType} would be displayed here.\n\nYou can replace this with:\n- A modal showing project screenshots\n- An embedded video demo\n- A link to a live demo\n- An interactive project walkthrough`);
+    }
+}
 
 // Close project demo modal
 if (projectDemoClose) {
@@ -577,9 +649,7 @@ document.addEventListener('keydown', function (e) {
 
 function closeProjectDemoModal() {
     if (projectDemoModal) {
-        projectDemoModal.classList.remove('show');
-        projectDemoModal.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = 'auto';
+        closeModalDialog(projectDemoModal);
 
         // Stop and reset video
         if (projectDemoVideo) {
@@ -644,6 +714,7 @@ const projectDetailsClose    = document.getElementById('projectDetailsClose');
 const projectDetailsCloseBtn = document.getElementById('projectDetailsCloseBtn');
 const projectDetailsIcon     = document.getElementById('projectDetailsIcon');
 const projectDetailsTitle    = document.getElementById('projectDetailsTitle');
+const projectDetailsSummary  = document.getElementById('projectDetailsSummary');
 
 const projectDetailsFeats    = document.getElementById('projectDetailsFeatures');
 const projectDetailsTags     = document.getElementById('projectDetailsTags');
@@ -658,6 +729,7 @@ document.querySelectorAll('.btn-project-details').forEach(btn => {
 
         projectDetailsIcon.textContent     = data.icon;
         projectDetailsTitle.textContent    = data.title;
+        projectDetailsSummary.textContent  = data.description;
 
 
         projectDetailsFeats.innerHTML = data.features.map(f => `<li>${f}</li>`).join('');
@@ -666,9 +738,9 @@ document.querySelectorAll('.btn-project-details').forEach(btn => {
         if (data.video) {
             projectDetailsWatchDemo.style.display = 'inline-flex';
             projectDetailsWatchDemo.onclick = () => {
-                closeProjectDetails();
+                closeProjectDetails({ returnFocus: false });
                 const demoBtn = document.querySelector(`.btn-project-demo[data-demo="${key}"]`);
-                if (demoBtn) demoBtn.click();
+                if (demoBtn) openProjectDemo(demoBtn);
             };
         } else {
             projectDetailsWatchDemo.style.display = 'none';
@@ -681,9 +753,7 @@ document.querySelectorAll('.btn-project-details').forEach(btn => {
             projectDetailsGithub.style.display = 'none';
         }
 
-        projectDetailsModal.classList.add('show');
-        projectDetailsModal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
+        openModalDialog(projectDetailsModal, this, projectDetailsClose);
     });
 });
 
@@ -701,10 +771,8 @@ document.addEventListener('keydown', e => {
     }
 });
 
-function closeProjectDetails() {
+function closeProjectDetails(options = {}) {
     if (projectDetailsModal) {
-        projectDetailsModal.classList.remove('show');
-        projectDetailsModal.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = 'auto';
+        closeModalDialog(projectDetailsModal, options);
     }
 }

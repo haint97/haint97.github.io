@@ -66,15 +66,14 @@
         <div class="hero-content">
             <div class="hero-text">
                 <h1 class="hero-title">
-                    <span class="accent">&gt;_</span> Engineering the Future with AI-Powered & Distributed Intelligence
+                    <span class="accent">&gt;_</span> Senior Backend Engineer Building AI-Powered Distributed Systems
                 </h1>
-                <p class="hero-subtitle">
-                    <!-- Software Engineer | Building high-performance distributed systems -->
-                    Software Engineer | Transitioning to AI Engineering | Building intelligent systems & scalable architectures
+                <p class="hero-subtitle"> Software Engineer | Transitioning to AI Engineering | Building intelligent systems & scalable architectures
+
                 </p>
                 <div class="hero-cta">
                     <a href="#contact" class="btn btn-primary">Get In Touch</a>
-                    <a href="#experience" class="btn btn-secondary">View My Work</a>
+                    <a href="#projects" class="btn btn-secondary">Explore Projects</a>
                     <!-- <a href="resume.pdf" download="Hai_Nguyen_Thai_resume.pdf" class="btn btn-tertiary">📥 Download
                         Resume</a> -->
                 </div>
@@ -380,7 +379,7 @@
                         <span class="tech-tag">OpenAI</span>
                         <span class="tech-tag">Telegram</span>
                         <span class="tech-tag">LM Studio</span>
-                        <span class="tech-tag">LLM</span>
+                        <span class="tech-tag">Streaming</span>
                     </div>
                     <div class="project-actions">
                         <button class="btn-project-demo" data-demo="llm-telegram-bot" data-video="pet-projects/llm-tegegram-bot/LLM Telegram bot.mov" aria-label="View LLM Telegram Bot Demo">
@@ -409,7 +408,6 @@
                     <div class="project-tech">
                         <span class="tech-tag">Function Calling</span>
                         <span class="tech-tag">OpenAI</span>
-                        <span class="tech-tag">LLM</span>
                         <span class="tech-tag">yfinance</span>
                         <span class="tech-tag">Pydantic</span>
                     </div>
@@ -441,18 +439,9 @@
                     <div class="project-tech">
                         <span class="tech-tag">RAG</span>
                         <span class="tech-tag">ChromaDB</span>
-                        <span class="tech-tag">Vector Embeddings</span>
                         <span class="tech-tag">RAGAS Metrics</span>
-                        <span class="tech-tag">Hallucination Detection</span>
-                        <span class="tech-tag">Context Relevance Evaluation</span>
-                        <span class="tech-tag">Answer Faithfulness Assessment</span>
-                        <span class="tech-tag">Confidence Scoring</span>
-                        <span class="tech-tag">Quality Assurance (AI)</span>
-                        <span class="tech-tag">Semantic Search</span>
-                        <span class="tech-tag">Keyword Search</span>
-                        <span class="tech-tag">Query Expansion</span>
-                        <span class="tech-tag">Multi-hop Reasoning</span>
-                        <span class="tech-tag">Content-aware Chunking</span>
+                        <span class="tech-tag">Guardrails</span>
+                        <span class="tech-tag tech-tag-muted">More in details</span>
                     </div>
                     <div class="project-actions">
                         <button class="btn-project-demo" data-demo="qa-engine" aria-label="View QA Engine Demo">
@@ -594,9 +583,15 @@
             <h2 class="section-title" data-aos="fade-up">Get In <span class="accent-text">Touch</span></h2>
             <div class="contact-content">
                 <p class="contact-intro" data-aos="fade-up" data-aos-delay="100">
-                    I'm always interested in hearing about new opportunities and collaborating on exciting projects.
-                    Feel free to reach out!
+                    I'm open to senior backend, platform, and AI engineering opportunities where reliability,
+                    distributed systems, and strong product ownership matter. If you're hiring, building something
+                    ambitious, or want to collaborate from Singapore or remotely, let's talk.
                 </p>
+                <div class="contact-focus" data-aos="fade-up" data-aos-delay="150">
+                    <span class="contact-pill">Senior Backend & Platform Roles</span>
+                    <span class="contact-pill">AI Engineering Collaboration</span>
+                    <span class="contact-pill">Singapore / Remote-Friendly</span>
+                </div>
                 <div class="contact-methods">
                     <a href="mailto:nguyenthaihai00@gmail.com" class="contact-link" data-aos="zoom-in"
                         data-aos-delay="200">
@@ -606,6 +601,7 @@
                         <div class="contact-text">
                             <p class="contact-label">Email</p>
                             <p class="contact-value">nguyenthaihai00@gmail.com</p>
+                            <p class="contact-meta">Best for opportunities, consulting, and direct outreach.</p>
                         </div>
                     </a>
 
@@ -617,6 +613,7 @@
                         <div class="contact-text">
                             <p class="contact-label">LinkedIn</p>
                             <p class="contact-value">linkedin.com/in/haint97</p>
+                            <p class="contact-meta">Best for introductions, networking, and professional context.</p>
                         </div>
                     </a>
                 </div>
@@ -627,16 +624,15 @@
     <!-- Footer -->
     <footer class="footer" role="contentinfo">
         <div class="container">
-            <p>&copy; <span id="copyright-year">2026</span> Hai Nguyen Thai. Crafted with <span class="accent">❤️</span>
-                & passion for code.<br>
-                <span style="font-size:0.95em;color:var(--text-tertiary)">This page was developed by <span class="highlight">vide coding</span> and <span class="highlight">AI</span>.</span>
+            <p>&copy; <span id="copyright-year">2026</span> Hai Nguyen Thai.<br>
+                <span class="footer-note">Designed and built with care, code, and a little AI assistance.</span>
             </p>
         </div>
     </footer>
 
     <!-- Certificate Modal -->
-    <div id="certModal" class="cert-modal" role="dialog" aria-labelledby="certModalTitle" aria-hidden="true">
-        <div class="cert-modal-content">
+    <div id="certModal" class="cert-modal" role="dialog" aria-modal="true" aria-labelledby="certModalTitle" aria-describedby="certModalIssuer" aria-hidden="true">
+        <div class="cert-modal-content" tabindex="-1">
             <button class="cert-modal-close" aria-label="Close certificate modal" id="certModalClose">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -656,14 +652,17 @@
     </div>
 
     <!-- Project Demo Modal -->
-    <div id="projectDemoModal" class="cert-modal" role="dialog" aria-labelledby="projectDemoTitle" aria-hidden="true">
-        <div class="cert-modal-content">
+    <div id="projectDemoModal" class="cert-modal" role="dialog" aria-modal="true" aria-labelledby="projectDemoTitle" aria-describedby="projectDemoHelp" aria-hidden="true">
+        <div class="cert-modal-content" tabindex="-1">
             <button class="cert-modal-close" aria-label="Close project demo modal" id="projectDemoClose">
                 <span aria-hidden="true">&times;</span>
             </button>
             <div class="cert-modal-header">
                 <span class="cert-modal-icon" id="projectDemoIcon">🎬</span>
-                <h2 id="projectDemoTitle">Project Demo</h2>
+                <div>
+                    <h2 id="projectDemoTitle">Project Demo</h2>
+                    <p id="projectDemoHelp" class="modal-helper">Press Escape to close the demo and return to the page.</p>
+                </div>
             </div>
             <div class="cert-modal-body">
                 <video id="projectDemoVideo" controls class="cert-image" style="width: 100%; max-height: 70vh;">
@@ -674,8 +673,8 @@
     </div>
 
     <!-- Project Details Modal -->
-    <div id="projectDetailsModal" class="project-details-modal" role="dialog" aria-labelledby="projectDetailsTitle" aria-hidden="true">
-        <div class="project-details-content">
+    <div id="projectDetailsModal" class="project-details-modal" role="dialog" aria-modal="true" aria-labelledby="projectDetailsTitle" aria-describedby="projectDetailsSummary" aria-hidden="true">
+        <div class="project-details-content" tabindex="-1">
             <button class="project-details-close" aria-label="Close project details" id="projectDetailsClose">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -683,6 +682,7 @@
                 <span class="project-details-icon" id="projectDetailsIcon"></span>
                 <div>
                     <h2 id="projectDetailsTitle"></h2>
+                    <p id="projectDetailsSummary" class="project-details-summary"></p>
                 </div>
             </div>
             <div class="project-details-body">

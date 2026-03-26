@@ -306,7 +306,7 @@ body {
 
 /* Eyebrow tag */
 .hero-text::before {
-    content: '{ AI Engineering & Distributed Systems }';
+    content: '{ Backend Platforms + Applied AI }';
     display: inline-block;
     font-family: var(--font-mono);
     font-size: 0.78rem;
@@ -337,7 +337,7 @@ body {
     color: var(--text-secondary);
     margin-bottom: 2.5rem;
     line-height: 1.7;
-    max-width: 480px;
+    max-width: 560px;
 }
 
 .hero-cta {
@@ -1023,6 +1023,12 @@ section {
     font-family: var(--font-mono);
 }
 
+.tech-tag-muted {
+    background: transparent;
+    color: var(--text-tertiary);
+    border-style: dashed;
+}
+
 .tech-tag:hover {
     background: rgba(108, 142, 255, 0.20);
     color: #fff;
@@ -1192,9 +1198,32 @@ section {
 .contact-intro {
     font-size: 1.1rem;
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
     color: var(--text-secondary);
     line-height: 1.8;
+}
+
+.contact-focus {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    max-width: 900px;
+    margin: 0 auto 2.5rem;
+}
+
+.contact-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    font-size: 0.83rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
 }
 
 .contact-methods {
@@ -1269,9 +1298,18 @@ section {
     margin-top: 0.2rem;
 }
 
+.contact-meta {
+    color: var(--text-tertiary);
+    font-size: 0.82rem;
+    line-height: 1.55;
+    margin-top: 0.65rem;
+}
+
 @media (max-width: 768px) {
     .contact-methods { grid-template-columns: 1fr; }
     .contact-link    { flex-direction: column; text-align: center; }
+    .contact-focus   { gap: 0.55rem; margin-bottom: 2rem; }
+    .contact-pill    { width: 100%; }
 }
 
 /* ==================== FOOTER ==================== */
@@ -1286,6 +1324,12 @@ section {
 
 .footer .accent { color: var(--accent); }
 .footer .highlight { color: var(--accent-light); font-weight: 600; }
+
+.footer-note {
+    display: inline-block;
+    margin-top: 0.35rem;
+    color: var(--text-secondary);
+}
 
 /* ==================== CERTIFICATE MODAL ==================== */
 .cert-modal {
@@ -1316,6 +1360,12 @@ section {
     position: relative;
     animation: slideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     box-shadow: 0 0 60px rgba(108, 142, 255, 0.20);
+}
+
+.cert-modal-content:focus-visible,
+.project-details-content:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
 }
 
 @keyframes slideUp {
@@ -1392,6 +1442,13 @@ section {
     text-transform: uppercase;
     letter-spacing: 0.06em;
     opacity: 0.85;
+}
+
+.modal-helper {
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    line-height: 1.55;
+    margin-top: 0.35rem;
 }
 
 .cert-modal-body {
@@ -1560,6 +1617,11 @@ section {
     transform: rotate(90deg);
 }
 
+.project-details-close:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
 .project-details-header {
     display: flex;
     align-items: center;
@@ -1582,6 +1644,14 @@ section {
     color: var(--text);
     margin: 0 0 0.2rem;
     font-weight: 700;
+}
+
+.project-details-summary {
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+    line-height: 1.65;
+    margin: 0.35rem 0 0;
+    max-width: 46ch;
 }
 
 .project-details-subtitle {
