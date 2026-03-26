@@ -126,9 +126,10 @@
 
 
             </div>
-            <div class="scroll-indicator">
-                <div class="mouse"></div>
-            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse"></div>
+        </div>
     </section>
 
     <!-- About Section -->
@@ -136,39 +137,41 @@
         <div class="container">
             <h2 class="section-title" data-aos="fade-up">About <span class="accent-text">Me</span></h2>
             <div class="about-content">
-                <div class="about-text" data-aos="fade-right" data-aos-delay="100">
+                <div class="about-lead" data-aos="fade-right" data-aos-delay="100">
+                    <p class="about-kicker">Backend leadership | Distributed systems | Applied AI</p>
+                    <h3 class="about-heading">
+                        I build reliable systems for real-world scale and turn complex business requirements into
+                        software that teams can operate, trust, and evolve.
+                    </h3>
                     <p>
-                        I'm a passionate Backend Leader and Senior Software Engineer with 5+ years of experience
-                        designing and building
-                        <span class="highlight">high-throughput distributed systems</span> for enterprise-scale
-                        applications.
+                        At <strong>NCS (IRAS)</strong>, I lead the design and development of financial microservices
+                        processing <span class="highlight">multi-million user batches</span> with the auditability and
+                        compliance required for national-scale systems.
                     </p>
-                    <p>
-                        Currently at <strong>NCS (IRAS)</strong>, I lead the design and development of financial
-                        microservices processing
-                        <span class="highlight">multi-million user batches</span> for Singapore's national tax
-                        authority, with 100% auditability and compliance.
-                    </p>
-                    <p>
-                        I specialize in <span class="highlight">Event Sourcing, Event-Driven Architecture, DDD, and CQRS
-                            patterns</span>,
-                        transforming complex requirements into scalable, maintainable solutions.
-                    </p>
-                    <p>
-                        Demonstrate a robust foundation in computer science, excelling in <span class="highlight">data structures</span>, <span class="highlight">algorithms</span>, <span class="highlight">object-oriented programming</span>, and <span class="highlight">design patterns</span> to deliver efficient and maintainable solutions.
-                    </p>
-                    <p>
-                        Rapidly adapt to emerging technologies, proactively seeking innovative approaches and embracing a <span class="highlight">solution-driven mindset</span> to overcome technical challenges.
-                    </p>
-                    <p>
-                        Successfully manage <span class="highlight">multiple projects</span> in fast-paced environments, consistently meeting <span class="highlight">tight deadlines</span> while fostering effective collaboration with <span class="highlight">cross-functional teams</span> and stakeholders.
-                    </p>
-                    <p>
-                        Expert at translating <span class="highlight">complex requirements</span> into actionable plans through active engagement and clear communication with stakeholders, ensuring <span class="highlight">project alignment</span> and success.
-                    </p>
-
                 </div>
-
+                <div class="about-highlights" data-aos="fade-left" data-aos-delay="150">
+                    <article class="about-card">
+                        <h3>What I build</h3>
+                        <p>
+                            <span class="highlight">High-throughput distributed systems</span>, event-driven services,
+                            and backend platforms that stay maintainable as complexity grows.
+                        </p>
+                    </article>
+                    <article class="about-card">
+                        <h3>How I work</h3>
+                        <p>
+                            I translate <span class="highlight">complex requirements</span> into actionable plans,
+                            collaborate closely with stakeholders, and stay effective under tight deadlines.
+                        </p>
+                    </article>
+                    <article class="about-card">
+                        <h3>What I'm exploring now</h3>
+                        <p>
+                            I'm extending a strong foundation in <span class="highlight">data structures, algorithms,
+                                OOP, and design patterns</span> into practical AI engineering and intelligent systems.
+                        </p>
+                    </article>
+                </div>
             </div>
         </div>
     </section>
@@ -369,9 +372,9 @@
                         <h3 class="project-title">LLM Telegram Bot</h3>
                     </div>
                     <p class="project-description">
-                        An intelligent Telegram chatbot powered by local LLM running on LM Studio with OpenAI API integration for advanced conversational AI capabilities with privacy-focused local model execution.
-                        Features conversation management (/clear, /history, /reset), custom personas (/persona, /systemprompt),
-                        and real-time streaming responses with typing indicators for enhanced user experience.
+                        <span class="project-line"><strong>Problem:</strong> Needed a private, flexible way to use LLMs inside a familiar chat interface.</span>
+                        <span class="project-line"><strong>Solution:</strong> Built a Telegram bot on top of LM Studio and OpenAI-compatible APIs with personas, memory controls, and streaming replies.</span>
+                        <span class="project-line"><strong>Impact:</strong> Demonstrates practical AI UX, local-first deployment, and prompt control in a polished workflow.</span>
                     </p>
                     <div class="project-tech">
                         <span class="tech-tag">OpenAI</span>
@@ -399,9 +402,9 @@
                         <h3 class="project-title">Stock Analysis AI</h3>
                     </div>
                     <p class="project-description">
-                        An intelligent AI chatbot that performs real-time stock market analysis through natural conversation.
-                        Uses OpenAI function calling to execute symbol lookups, retrieve current prices, analyze technical trends with moving averages and volatility tracking,
-                        and provide AI-powered investment recommendations based on comprehensive Yahoo Finance data.
+                        <span class="project-line"><strong>Problem:</strong> Stock analysis tools are often fragmented across search, charts, and manual calculations.</span>
+                        <span class="project-line"><strong>Solution:</strong> Built a conversational AI assistant that uses OpenAI function calling to fetch symbols, prices, and technical signals from market data.</span>
+                        <span class="project-line"><strong>Impact:</strong> Shows how tool-using AI can turn natural language into grounded, actionable financial analysis.</span>
                     </p>
                     <div class="project-tech">
                         <span class="tech-tag">Function Calling</span>
@@ -431,9 +434,9 @@
                         <h3 class="project-title">Advanced RAG Multi-Source QA System</h3>
                     </div>
                     <p class="project-description">
-                        An intelligent QA system that retrieves accurate, grounded answers from multiple sources (Wikipedia, web, files) with adaptive content-aware chunking and built-in quality assurance.
-                        Features hybrid search (70% semantic via embeddings + 30% keyword-based retrieval via BM25), RAGAS quality metrics (context relevance, answer faithfulness, hallucination detection),
-                        query expansion (4 variations) for improved retrieval coverage, multi-hop reasoning (3-step decomposition) to decompose complex questions into verifiable steps, confidence thresholding (0.6).
+                        <span class="project-line"><strong>Problem:</strong> Multi-source QA systems often retrieve broad context but still struggle with grounding and trust.</span>
+                        <span class="project-line"><strong>Solution:</strong> Built a RAG pipeline with hybrid retrieval, query expansion, RAGAS evaluation, and hallucination checks across web, Wikipedia, and files.</span>
+                        <span class="project-line"><strong>Impact:</strong> Highlights a more production-minded approach to answer quality, observability, and guardrails.</span>
                     </p>
                     <div class="project-tech">
                         <span class="tech-tag">RAG</span>

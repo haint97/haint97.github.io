@@ -595,26 +595,96 @@ section {
 .about { background: var(--bg-secondary); }
 
 .about-content {
-    max-width: 1000px;
+    max-width: 1100px;
     margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.95fr);
+    gap: 1.75rem;
+    align-items: start;
 }
 
-.about-text {
-    column-count: 2;
-    column-gap: 3.5rem;
+.about-lead,
+.about-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow);
 }
 
-.about-text p {
-    font-size: 1.05rem;
+.about-lead {
+    padding: 2.25rem;
+    background:
+        radial-gradient(circle at top right, rgba(108, 142, 255, 0.12), transparent 45%),
+        var(--bg-card);
+}
+
+.about-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+}
+
+.about-heading {
+    font-size: 2rem;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
     margin-bottom: 1.25rem;
+    color: var(--text);
+}
+
+.about-lead p,
+.about-card p {
+    font-size: 1.05rem;
     line-height: 1.85;
     color: var(--text-secondary);
-    break-inside: avoid;
+}
+
+.about-highlights {
+    display: grid;
+    gap: 1rem;
+}
+
+.about-card {
+    padding: 1.5rem;
+    transition: var(--transition);
+}
+
+.about-card:hover {
+    border-color: var(--border);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-accent);
+    background: rgba(108, 142, 255, 0.05);
+}
+
+.about-card h3 {
+    font-size: 1.05rem;
+    color: var(--text);
+    margin-bottom: 0.8rem;
+}
+
+@media (max-width: 900px) {
+    .about-content {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 768px) {
-    .about-text { column-count: 1; }
-    .about-text p { font-size: 0.98rem; }
+    .about-lead {
+        padding: 1.5rem;
+    }
+
+    .about-heading {
+        font-size: 1.5rem;
+    }
+
+    .about-lead p,
+    .about-card p {
+        font-size: 0.98rem;
+    }
 }
 
 /* ==================== SKILLS SECTION ==================== */
@@ -921,6 +991,18 @@ section {
     font-size: 0.95rem;
     margin: 0;
     flex-grow: 1;
+}
+
+.project-line {
+    display: block;
+}
+
+.project-line + .project-line {
+    margin-top: 0.45rem;
+}
+
+.project-description strong {
+    color: var(--text);
 }
 
 .project-tech {

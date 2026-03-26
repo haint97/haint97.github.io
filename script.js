@@ -517,7 +517,7 @@ document.addEventListener('mousedown', () => {
 const a11yStyle = document.createElement('style');
 a11yStyle.textContent = `
     body.keyboard-nav *:focus {
-        outline: 2px solid var(--primary-color);
+        outline: 2px solid var(--accent);
         outline-offset: 2px;
     }
 `;
