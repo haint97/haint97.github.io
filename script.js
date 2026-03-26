@@ -272,39 +272,7 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// ==================== DYNAMIC CODE SNIPPETS ====================
-const codeSnippets = [
-    'const buildScalable = () => { return "microservices"; }',
-    'function* eventSourcing() { yield transactions; }',
-    'class DomainModel { architect(); }',
-    'container.register(Repository).asSingleton().resolve(Service);',
-    'const circuitBreaker = new Resilience().shield(service);',
-    'await kafka.stream().process();',
-    'db.session({ consistency: strong }).write(transaction);',
-    'SELECT * FROM distributed_systems;',
-    'interface HighPerformance { optimize(); }',
-    'async function handleEvents() { replay(); }',
-    'const architecture = new CQRS().design();',
-    'await mutex.acquire(resourceId, { timeout: 5000, retry: 3 });',
-    'db.optimize(indexes, caching);',
-    'await request.ensureUnique(idempotencyKey, () => process());'
-];
 
-// Generate random code snippets for background
-function generateCodeBackground() {
-    const background = document.querySelector('.code-background');
-    const snippets = background.querySelectorAll('.code-snippet');
-
-    // Create a shuffled copy of the snippets
-    const shuffled = [...codeSnippets].sort(() => Math.random() - 0.5);
-
-    snippets.forEach((snippet, index) => {
-        // Use the shuffled array, and wrap around if there are more elements than snippets
-        snippet.textContent = shuffled[index % shuffled.length];
-    });
-}
-
-generateCodeBackground();
 // ==================== FLOATING CARD INTERACTION ====================
 const floatingCards = document.querySelectorAll('.floating-card');
 
@@ -320,16 +288,7 @@ floatingCards.forEach(card => {
     });
 });
 
-// ==================== PARALLAX EFFECT FOR CODE BACKGROUND ====================
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const codeBackground = document.querySelectorAll('.code-snippet');
 
-    codeBackground.forEach((snippet, index) => {
-        const speed = 0.5 + (index * 0.1);
-        snippet.style.transform = `translateY(${scrolled * speed}px)`;
-    });
-});
 
 // ==================== SKILL CARDS HOVER EFFECT ====================
 const skillTags = document.querySelectorAll('.skill-tag');
