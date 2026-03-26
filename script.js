@@ -40,13 +40,23 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+let prefersReducedMotion = reducedMotionQuery.matches;
+
+if (typeof reducedMotionQuery.addEventListener === 'function') {
+    reducedMotionQuery.addEventListener('change', (event) => {
+        prefersReducedMotion = event.matches;
+    });
+}
+
 // ==================== AOS INITIALIZATION ====================
 window.addEventListener('load', function () {
     AOS.init({
-        duration: 800,
+        disable: prefersReducedMotion,
+        duration: prefersReducedMotion ? 0 : 800,
         easing: 'ease-in-out',
-        once: false,
-        mirror: true,
+        once: prefersReducedMotion,
+        mirror: !prefersReducedMotion,
         offset: 100
     });
 });
@@ -265,6 +275,18 @@ themeToggle.addEventListener('click', () => {
 // ==================== SMOOTH SCROLL & ACTIVE LINK ====================
 const navLinks = document.querySelectorAll('.nav-link');
 const sections = document.querySelectorAll('section');
+const visibleSections = new Map();
+
+function getNavHeight() {
+    const navbarElement = document.querySelector('.navbar');
+    return navbarElement ? navbarElement.offsetHeight : 0;
+}
+
+function setActiveNav(targetId) {
+    navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href').slice(1) === targetId);
+    });
+}
 
 // Smooth scroll for nav links
 navLinks.forEach(link => {
@@ -275,38 +297,69 @@ navLinks.forEach(link => {
 
         if (targetSection) {
             // Adjust offset for sticky navbar
-            const navHeight = document.querySelector('.navbar').offsetHeight;
+            const navHeight = getNavHeight();
             const targetPosition = targetSection.offsetTop - navHeight;
 
             window.scrollTo({
                 top: targetPosition,
-                behavior: 'smooth'
+                behavior: prefersReducedMotion ? 'auto' : 'smooth'
             });
         }
     });
 });
 
-// Update active link on scroll
-window.addEventListener('scroll', () => {
-    let current = '';
-    const navHeight = document.querySelector('.navbar').offsetHeight;
+let sectionLinkObserver;
+
+function refreshActiveSection() {
+    if (!visibleSections.size) return;
+
+    const [activeSectionId] = Array.from(visibleSections.entries())
+        .sort(([, a], [, b]) => {
+            if (b.ratio !== a.ratio) {
+                return b.ratio - a.ratio;
+            }
+
+            return Math.abs(a.top) - Math.abs(b.top);
+        })[0];
+
+    setActiveNav(activeSectionId);
+}
+
+function initSectionLinkObserver() {
+    if (sectionLinkObserver) {
+        sectionLinkObserver.disconnect();
+    }
+
+    visibleSections.clear();
+
+    sectionLinkObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const sectionId = entry.target.getAttribute('id');
+            if (!sectionId) return;
+
+            if (entry.isIntersecting) {
+                visibleSections.set(sectionId, {
+                    ratio: entry.intersectionRatio,
+                    top: entry.boundingClientRect.top
+                });
+            } else {
+                visibleSections.delete(sectionId);
+            }
+        });
+
+        refreshActiveSection();
+    }, {
+        rootMargin: `-${getNavHeight() + 24}px 0px -52% 0px`,
+        threshold: [0.12, 0.3, 0.55, 0.8]
+    });
 
     sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-
-        if (scrollY >= sectionTop - navHeight - 100) {
-            current = section.getAttribute('id');
-        }
+        sectionLinkObserver.observe(section);
     });
+}
 
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href').slice(1) === current) {
-            link.classList.add('active');
-        }
-    });
-});
+initSectionLinkObserver();
+window.addEventListener('resize', initSectionLinkObserver);
 
 // ==================== INTERSECTION OBSERVER FOR ANIMATIONS ====================
 const observerOptions = {
@@ -324,12 +377,14 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 // Observe all major elements for fade-in animation
-document.querySelectorAll('section, .experience-item, .cert-card, .skill-category').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(el);
-});
+if (!prefersReducedMotion) {
+    document.querySelectorAll('section, .experience-item, .cert-card, .skill-category').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+}
 
 // ==================== NAVBAR SCROLL EFFECT ====================
 const navbar = document.querySelector('.navbar');
@@ -349,49 +404,55 @@ window.addEventListener('scroll', () => {
 // ==================== FLOATING CARD INTERACTION ====================
 const floatingCards = document.querySelectorAll('.floating-card');
 
-floatingCards.forEach(card => {
-    card.addEventListener('mouseenter', () => {
-        card.style.boxShadow = '0 0 30px rgba(0, 255, 136, 0.6)';
-        card.style.transform = 'scale(1.1)';
-    });
+if (!prefersReducedMotion) {
+    floatingCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.boxShadow = '0 0 30px rgba(0, 255, 136, 0.6)';
+            card.style.transform = 'scale(1.1)';
+        });
 
-    card.addEventListener('mouseleave', () => {
-        card.style.boxShadow = 'none';
-        card.style.transform = 'scale(1)';
+        card.addEventListener('mouseleave', () => {
+            card.style.boxShadow = 'none';
+            card.style.transform = 'scale(1)';
+        });
     });
-});
+}
 
 
 
 // ==================== SKILL CARDS HOVER EFFECT ====================
 const skillTags = document.querySelectorAll('.skill-tag');
 
-skillTags.forEach(tag => {
-    tag.addEventListener('mouseenter', () => {
-        // Animate all tags
-        skillTags.forEach(t => {
-            if (t !== tag) {
-                t.style.opacity = '0.5';
-                t.style.transform = 'scale(0.95)';
-            }
+if (!prefersReducedMotion) {
+    skillTags.forEach(tag => {
+        tag.addEventListener('mouseenter', () => {
+            // Animate all tags
+            skillTags.forEach(t => {
+                if (t !== tag) {
+                    t.style.opacity = '0.5';
+                    t.style.transform = 'scale(0.95)';
+                }
+            });
+            tag.style.transform = 'scale(1.05)';
+            tag.style.opacity = '1';
         });
-        tag.style.transform = 'scale(1.05)';
-        tag.style.opacity = '1';
-    });
 
-    tag.addEventListener('mouseleave', () => {
-        skillTags.forEach(t => {
-            t.style.opacity = '1';
-            t.style.transform = 'scale(1)';
+        tag.addEventListener('mouseleave', () => {
+            skillTags.forEach(t => {
+                t.style.opacity = '1';
+                t.style.transform = 'scale(1)';
+            });
         });
     });
-});
+}
 
 // ==================== FORM VALIDATION & SUBMISSION ====================
 const contactLinks = document.querySelectorAll('.contact-link');
 
 contactLinks.forEach(link => {
     link.addEventListener('click', (e) => {
+        if (prefersReducedMotion) return;
+
         // Allow default behavior (opening email/phone)
         // Add a subtle animation
         link.style.animation = 'pulse 0.5s ease';
@@ -430,18 +491,22 @@ const timelineObserver = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.1 });
 
-experienceItems.forEach((item, index) => {
-    item.style.opacity = '0';
-    item.style.transform = 'translateX(-20px)';
-    item.style.transition = `opacity 0.6s ease, transform 0.6s ease`;
-    timelineObserver.observe(item);
-});
+if (!prefersReducedMotion) {
+    experienceItems.forEach((item, index) => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateX(-20px)';
+        item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        timelineObserver.observe(item);
+    });
+}
 
 // ==================== BUTTON RIPPLE EFFECT ====================
 const buttons = document.querySelectorAll('.btn');
 
 buttons.forEach(button => {
     button.addEventListener('click', function (e) {
+        if (prefersReducedMotion) return;
+
         const ripple = document.createElement('span');
         const rect = this.getBoundingClientRect();
         const size = Math.max(rect.width, rect.height);
@@ -529,10 +594,10 @@ document.addEventListener('keydown', (e) => {
             e.preventDefault();
             const target = document.querySelector(keyMap[e.key]);
             if (target) {
-                const navHeight = document.querySelector('.navbar').offsetHeight;
+                const navHeight = getNavHeight();
                 window.scrollTo({
                     top: target.offsetTop - navHeight,
-                    behavior: 'smooth'
+                    behavior: prefersReducedMotion ? 'auto' : 'smooth'
                 });
             }
         }
@@ -552,6 +617,8 @@ navLinks.forEach(link => {
 
 // ==================== PAGE LOAD ANIMATIONS ====================
 window.addEventListener('load', () => {
+    if (prefersReducedMotion) return;
+
     // Trigger animations after page load
     document.querySelectorAll('[data-animate]').forEach(el => {
         el.style.animation = 'fadeIn 0.6s ease forwards';
