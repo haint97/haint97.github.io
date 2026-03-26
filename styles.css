@@ -595,10 +595,13 @@ section {
 .about { background: var(--bg-secondary); }
 
 .about-content {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 4rem;
-    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.about-text {
+    column-count: 2;
+    column-gap: 3.5rem;
 }
 
 .about-text p {
@@ -606,52 +609,12 @@ section {
     margin-bottom: 1.25rem;
     line-height: 1.85;
     color: var(--text-secondary);
-}
-
-.about-stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
-}
-
-.stat-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.75rem;
-    text-align: center;
-    backdrop-filter: blur(12px);
-    transition: var(--transition);
-}
-
-.stat-card:hover {
-    border-color: var(--accent);
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-accent);
-    background: rgba(108, 142, 255, 0.06);
-}
-
-.stat-number {
-    font-size: 2.4rem;
-    font-weight: 900;
-    color: var(--accent);
-    margin-bottom: 0.4rem;
-    font-family: var(--font-mono);
-    letter-spacing: -0.02em;
-}
-
-.stat-label {
-    font-size: 0.88rem;
-    color: var(--text-tertiary);
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
+    break-inside: avoid;
 }
 
 @media (max-width: 768px) {
-    .about-content { grid-template-columns: 1fr; gap: 2rem; }
-    .about-stats   { grid-template-columns: 1fr 1fr; }
-    .about-text p  { font-size: 0.98rem; }
+    .about-text { column-count: 1; }
+    .about-text p { font-size: 0.98rem; }
 }
 
 /* ==================== SKILLS SECTION ==================== */
