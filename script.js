@@ -1,5 +1,8 @@
+document.documentElement.classList.add('js');
+
 const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 let prefersReducedMotion = reducedMotionQuery.matches;
+let resizeObserverTimeout = null;
 
 if (typeof reducedMotionQuery.addEventListener === 'function') {
     reducedMotionQuery.addEventListener('change', (event) => {
@@ -19,8 +22,7 @@ const projectsData = {
             'Local-first execution through LM Studio to keep sensitive conversations off third-party servers.',
         ],
         tags: ['Python', 'OpenAI', 'Telegram Bot API', 'LM Studio', 'LLM', 'Streaming', 'Prompt Engineering'],
-        video: 'pet-projects/llm-tegegram-bot/LLM Telegram bot.mov',
-        github: null,
+        video: 'pet-projects/llm-tegegram-bot/LLM Telegram bot.mp4',
     },
     'stock-analysis': {
         icon: '📊',
@@ -33,8 +35,7 @@ const projectsData = {
             'Tool-using AI workflow that turns natural language prompts into grounded market reports.',
         ],
         tags: ['Python', 'OpenAI', 'Function Calling', 'LLM', 'yfinance', 'Pydantic', 'Technical Analysis', 'Yahoo Finance'],
-        video: 'pet-projects/stock-ai-analysis/Stock BOT AI.mov',
-        github: null,
+        video: 'pet-projects/stock-ai-analysis/Stock BOT AI.mp4',
     },
     'qa-engine': {
         icon: '🧠',
@@ -48,7 +49,6 @@ const projectsData = {
         ],
         tags: ['RAG', 'BM25', 'ChromaDB', 'RAGAS', 'Guardrails', 'Query Expansion', 'Hallucination Detection'],
         video: null,
-        github: null,
     },
 };
 
@@ -129,6 +129,7 @@ function closeMobileMenu() {
     hamburger.classList.remove('active');
     hamburger.setAttribute('aria-expanded', 'false');
     navMenu.classList.remove('active');
+    document.body.classList.remove('menu-open');
 }
 
 function setActiveNav(targetId) {
@@ -201,6 +202,7 @@ function initNavigation() {
             const expanded = hamburger.classList.toggle('active');
             navMenu.classList.toggle('active', expanded);
             hamburger.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+            document.body.classList.toggle('menu-open', expanded);
         });
     }
 
@@ -229,11 +231,21 @@ function initNavigation() {
         closeMobileMenu();
     });
 
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && navMenu?.classList.contains('active')) {
+            closeMobileMenu();
+        }
+    });
+
     window.addEventListener('resize', () => {
         if (window.innerWidth > 860) {
             closeMobileMenu();
         }
-        initSectionLinkObserver();
+
+        window.clearTimeout(resizeObserverTimeout);
+        resizeObserverTimeout = window.setTimeout(() => {
+            initSectionLinkObserver();
+        }, 120);
     });
 
     window.addEventListener('scroll', refreshNavbarState, { passive: true });
@@ -250,17 +262,61 @@ function initFooterYear() {
     }
 }
 
-function initAOS() {
-    window.addEventListener('load', () => {
-        if (typeof AOS !== 'undefined') {
-            AOS.init({
-                disable: prefersReducedMotion,
-                duration: prefersReducedMotion ? 0 : 700,
-                easing: 'ease-out-cubic',
-                once: true,
-                offset: 80,
-            });
-        }
+function assignRevealTargets() {
+    const revealGroups = [
+        { selector: '.section-title', variant: 'soft' },
+        { selector: '.section-intro, .projects-intro', variant: 'soft', baseDelay: 70 },
+        { selector: '.about-lead', variant: 'left' },
+        { selector: '.about-card', variant: 'soft', stagger: 65 },
+        { selector: '.skill-category', variant: 'soft', stagger: 55 },
+        { selector: '.experience-item-featured', variant: 'soft', stagger: 60 },
+        { selector: '.experience-item-secondary', variant: 'soft', baseDelay: 80, stagger: 45 },
+        { selector: '.project-card', variant: 'scale', stagger: 70 },
+        { selector: '.cert-card', variant: 'soft', stagger: 50 },
+        { selector: '.education-card', variant: 'soft' },
+        { selector: '.contact-content', variant: 'soft' },
+        { selector: '.footer', variant: 'soft' }
+    ];
+
+    revealGroups.forEach(({ selector, variant = 'soft', baseDelay = 0, stagger = 0 }) => {
+        document.querySelectorAll(selector).forEach((element, index) => {
+            element.classList.add('reveal');
+            element.dataset.reveal = variant;
+            element.style.setProperty('--reveal-delay', `${baseDelay + (index * stagger)}ms`);
+        });
+    });
+}
+
+function initMotionSystem() {
+    const root = document.documentElement;
+
+    assignRevealTargets();
+
+    const revealElements = document.querySelectorAll('.reveal');
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+        revealElements.forEach((element) => element.classList.add('is-visible'));
+        root.classList.add('page-ready');
+        return;
+    }
+
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+        });
+    }, {
+        rootMargin: '0px 0px -12% 0px',
+        threshold: 0.14
+    });
+
+    revealElements.forEach((element) => revealObserver.observe(element));
+
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            root.classList.add('page-ready');
+        });
     });
 }
 
@@ -316,6 +372,11 @@ function initCertificationModal() {
     }
 
     function closeCertModal() {
+        certImage.removeAttribute('src');
+        certImage.alt = 'Certificate';
+        certImage.hidden = true;
+        certVerifyLink.removeAttribute('href');
+        certVerifyLink.hidden = true;
         closeModalDialog(certModal);
     }
 
@@ -326,7 +387,7 @@ function initCertificationModal() {
 
             certImage.src = `certs/${certFile}`;
             certImage.alt = badge.textContent.trim();
-            certImage.style.display = 'block';
+            certImage.hidden = false;
             certModalTitle.textContent = badge.textContent.trim();
             certModalIcon.textContent = '🏆';
             certModalIssuer.textContent = 'Achievement';
@@ -359,17 +420,18 @@ function initCertificationModal() {
             if (certImageFile) {
                 certImage.src = `certs/${certImageFile}`;
                 certImage.alt = certName;
-                certImage.style.display = 'block';
+                certImage.hidden = false;
             } else {
                 certImage.removeAttribute('src');
-                certImage.alt = '';
-                certImage.style.display = 'none';
+                certImage.alt = 'Certificate';
+                certImage.hidden = true;
             }
 
             if (verifyUrl) {
                 certVerifyLink.href = verifyUrl;
                 certVerifyLink.hidden = false;
             } else {
+                certVerifyLink.removeAttribute('href');
                 certVerifyLink.hidden = true;
             }
 
@@ -397,20 +459,10 @@ function initCertificationModal() {
 function initProjectCards() {
     document.querySelectorAll('.project-card').forEach((card) => {
         const demoButton = card.querySelector('.btn-project-demo');
-        const linkButton = card.querySelector('.btn-project-link');
         const actions = card.querySelector('.project-actions');
 
         if (demoButton && !demoButton.getAttribute('data-video')) {
             demoButton.hidden = true;
-        }
-
-        if (linkButton) {
-            const normalizedHref = normalizeExternalUrl(linkButton.getAttribute('href'));
-            if (!normalizedHref) {
-                linkButton.hidden = true;
-            } else {
-                linkButton.href = normalizedHref;
-            }
         }
 
         if (actions) {
@@ -430,9 +482,13 @@ function initProjectDemoModal() {
         return { openProjectDemo: () => {} };
     }
 
+    projectDemoVideo.playsInline = true;
+    projectDemoVideo.preload = 'none';
+
     function closeProjectDemo() {
         projectDemoVideo.pause();
         projectDemoVideo.removeAttribute('src');
+        projectDemoVideo.removeAttribute('poster');
         projectDemoVideo.load();
         closeModalDialog(projectDemoModal);
     }
@@ -442,10 +498,17 @@ function initProjectDemoModal() {
 
         const videoPath = triggerButton.getAttribute('data-video');
         if (!videoPath) return;
+        const posterPath = triggerButton.getAttribute('data-poster');
 
         const titleElement = triggerButton.closest('.project-card')?.querySelector('.project-title');
         projectDemoTitle.textContent = titleElement ? titleElement.textContent : 'Project Demo';
+        if (posterPath) {
+            projectDemoVideo.poster = posterPath;
+        } else {
+            projectDemoVideo.removeAttribute('poster');
+        }
         projectDemoVideo.src = videoPath;
+        projectDemoVideo.currentTime = 0;
 
         openModalDialog(projectDemoModal, triggerButton, projectDemoClose);
 
@@ -480,9 +543,8 @@ function initProjectDetailsModal(openProjectDemo) {
     const projectDetailsFeatures = document.getElementById('projectDetailsFeatures');
     const projectDetailsTags = document.getElementById('projectDetailsTags');
     const projectDetailsWatchDemo = document.getElementById('projectDetailsWatchDemo');
-    const projectDetailsGithub = document.getElementById('projectDetailsGithub');
 
-    if (!projectDetailsModal || !projectDetailsClose || !projectDetailsCloseBtn || !projectDetailsIcon || !projectDetailsTitle || !projectDetailsSummary || !projectDetailsFeatures || !projectDetailsTags || !projectDetailsWatchDemo || !projectDetailsGithub) {
+    if (!projectDetailsModal || !projectDetailsClose || !projectDetailsCloseBtn || !projectDetailsIcon || !projectDetailsTitle || !projectDetailsSummary || !projectDetailsFeatures || !projectDetailsTags || !projectDetailsWatchDemo) {
         return;
     }
 
@@ -526,15 +588,6 @@ function initProjectDetailsModal(openProjectDemo) {
                 projectDetailsWatchDemo.onclick = null;
             }
 
-            const githubUrl = normalizeExternalUrl(project.github);
-            if (githubUrl) {
-                projectDetailsGithub.hidden = false;
-                projectDetailsGithub.href = githubUrl;
-            } else {
-                projectDetailsGithub.hidden = true;
-                projectDetailsGithub.removeAttribute('href');
-            }
-
             openModalDialog(projectDetailsModal, button, projectDetailsClose);
         });
     });
@@ -542,8 +595,8 @@ function initProjectDetailsModal(openProjectDemo) {
 
 document.addEventListener('DOMContentLoaded', () => {
     initFooterYear();
+    initMotionSystem();
     initNavigation();
-    initAOS();
     initGlobalModalKeyboardHandling();
     initCertificationModal();
     initProjectCards();

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">LLM Telegram Bot demo poster</title>
+  <desc id="desc">Poster image for the LLM Telegram Bot project demo.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#0a1626"/>
+      <stop offset="100%" stop-color="#08111d"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#62e8ff"/>
+      <stop offset="100%" stop-color="#1bc9ed"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <g opacity="0.18">
+    <path d="M0 96H1280" stroke="#8ba2bf" stroke-width="1"/>
+    <path d="M0 192H1280" stroke="#8ba2bf" stroke-width="1"/>
+    <path d="M0 288H1280" stroke="#8ba2bf" stroke-width="1"/>
+    <path d="M0 384H1280" stroke="#8ba2bf" stroke-width="1"/>
+    <path d="M0 480H1280" stroke="#8ba2bf" stroke-width="1"/>
+    <path d="M0 576H1280" stroke="#8ba2bf" stroke-width="1"/>
+    <path d="M160 0V720" stroke="#8ba2bf" stroke-width="1"/>
+    <path d="M320 0V720" stroke="#8ba2bf" stroke-width="1"/>
+    <path d="M480 0V720" stroke="#8ba2bf" stroke-width="1"/>
+    <path d="M640 0V720" stroke="#8ba2bf" stroke-width="1"/>
+    <path d="M800 0V720" stroke="#8ba2bf" stroke-width="1"/>
+    <path d="M960 0V720" stroke="#8ba2bf" stroke-width="1"/>
+    <path d="M1120 0V720" stroke="#8ba2bf" stroke-width="1"/>
+  </g>
+  <rect x="112" y="88" width="1056" height="544" rx="36" fill="#0d1726" stroke="#203247" stroke-width="2"/>
+  <rect x="152" y="128" width="976" height="300" rx="28" fill="#08111d" stroke="#22364d" stroke-width="2"/>
+  <text x="188" y="190" fill="#62e8ff" font-family="Arial, sans-serif" font-size="28" font-weight="700">LOCAL LLM WORKFLOW</text>
+  <text x="188" y="258" fill="#f4f7fb" font-family="Arial, sans-serif" font-size="62" font-weight="700">LLM Telegram Bot</text>
+  <text x="188" y="316" fill="#a5b3c7" font-family="Arial, sans-serif" font-size="28">Privacy-first assistant with personas, memory controls, and streaming replies.</text>
+  <rect x="188" y="360" width="232" height="54" rx="27" fill="#102236" stroke="#28425a"/>
+  <text x="224" y="395" fill="#f4f7fb" font-family="Arial, sans-serif" font-size="24" font-weight="700">LM Studio</text>
+  <rect x="438" y="360" width="212" height="54" rx="27" fill="#102236" stroke="#28425a"/>
+  <text x="474" y="395" fill="#f4f7fb" font-family="Arial, sans-serif" font-size="24" font-weight="700">Telegram</text>
+  <rect x="668" y="360" width="232" height="54" rx="27" fill="#102236" stroke="#28425a"/>
+  <text x="704" y="395" fill="#f4f7fb" font-family="Arial, sans-serif" font-size="24" font-weight="700">Streaming</text>
+  <rect x="152" y="462" width="976" height="130" rx="28" fill="#0b1422" stroke="#203247" stroke-width="2"/>
+  <text x="188" y="516" fill="#ffbe6b" font-family="Courier New, monospace" font-size="26" font-weight="700">demo loading</text>
+  <text x="188" y="560" fill="#f4f7fb" font-family="Courier New, monospace" font-size="30">private_chat()</text>
+  <text x="188" y="600" fill="#f4f7fb" font-family="Courier New, monospace" font-size="30">stream_response()</text>
+  <circle cx="1020" cy="527" r="58" fill="url(#accent)"/>
+  <path d="M998 494L1052 527L998 560Z" fill="#041018"/>
+</svg>
