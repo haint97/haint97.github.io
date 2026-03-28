@@ -397,12 +397,6 @@ function initCertificationModal() {
         };
 
         badge.addEventListener('click', handleOpen);
-        badge.addEventListener('keypress', (event) => {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                handleOpen();
-            }
-        });
     });
 
     document.querySelectorAll('.cert-card').forEach((card) => {
@@ -439,12 +433,6 @@ function initCertificationModal() {
         };
 
         card.addEventListener('click', handleOpen);
-        card.addEventListener('keypress', (event) => {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                handleOpen();
-            }
-        });
     });
 
     certModalClose.setAttribute('data-modal-close', 'true');

@@ -18,6 +18,13 @@
     --shadow: 0 24px 60px rgba(2, 8, 23, 0.35);
     --shadow-soft: 0 14px 30px rgba(2, 8, 23, 0.18);
     --shadow-glow: 0 14px 32px rgba(27, 201, 237, 0.12);
+    --shadow-navbar: 0 18px 40px rgba(2, 8, 23, 0.24);
+    --shadow-accent: 0 10px 24px rgba(98, 232, 255, 0.22);
+    --shadow-accent-strong: 0 16px 30px rgba(27, 201, 237, 0.22);
+    --shadow-accent-press: 0 18px 36px rgba(27, 201, 237, 0.28);
+    --shadow-warm: 0 14px 30px rgba(255, 190, 107, 0.12);
+    --shadow-ring-soft: 0 0 0 6px rgba(98, 232, 255, 0.05);
+    --shadow-ring-accent: 0 0 0 8px rgba(98, 232, 255, 0.08);
     --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-display: 'Space Grotesk', 'Manrope', sans-serif;
     --font-mono: 'IBM Plex Mono', 'SFMono-Regular', monospace;
@@ -32,10 +39,6 @@
 *::before,
 *::after {
     box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
 }
 
 body {
@@ -61,11 +64,11 @@ body::before {
     position: fixed;
     inset: 0;
     background-image:
-        linear-gradient(rgba(162, 184, 212, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(162, 184, 212, 0.03) 1px, transparent 1px);
-    background-size: 54px 54px;
+        linear-gradient(rgba(162, 184, 212, 0.024) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(162, 184, 212, 0.024) 1px, transparent 1px);
+    background-size: 68px 68px;
     pointer-events: none;
-    opacity: 0.2;
+    opacity: 0.14;
     z-index: -2;
 }
 
@@ -73,7 +76,7 @@ body::after {
     content: '';
     position: fixed;
     inset: 0;
-    background: radial-gradient(circle at top center, rgba(98, 232, 255, 0.04), rgba(7, 17, 29, 0.2) 70%);
+    background: radial-gradient(circle at top center, rgba(98, 232, 255, 0.045), transparent 62%);
     pointer-events: none;
     z-index: -1;
 }
@@ -81,7 +84,6 @@ body::after {
 html.js .hero-eyebrow,
 html.js .hero-title,
 html.js .hero-subtitle,
-html.js .hero-proofline,
 html.js .hero-cta,
 html.js .hero-visual {
     opacity: 0;
@@ -91,7 +93,6 @@ html.js .hero-visual {
 html.js.page-ready .hero-eyebrow,
 html.js.page-ready .hero-title,
 html.js.page-ready .hero-subtitle,
-html.js.page-ready .hero-proofline,
 html.js.page-ready .hero-cta,
 html.js.page-ready .hero-visual {
     opacity: 1;
@@ -110,12 +111,8 @@ html.js .hero-subtitle {
     transition: opacity 620ms cubic-bezier(0.2, 0.7, 0.2, 1) 180ms, transform 620ms cubic-bezier(0.2, 0.7, 0.2, 1) 180ms;
 }
 
-html.js .hero-proofline {
-    transition: opacity 620ms cubic-bezier(0.2, 0.7, 0.2, 1) 240ms, transform 620ms cubic-bezier(0.2, 0.7, 0.2, 1) 240ms;
-}
-
 html.js .hero-cta {
-    transition: opacity 620ms cubic-bezier(0.2, 0.7, 0.2, 1) 300ms, transform 620ms cubic-bezier(0.2, 0.7, 0.2, 1) 300ms;
+    transition: opacity 620ms cubic-bezier(0.2, 0.7, 0.2, 1) 240ms, transform 620ms cubic-bezier(0.2, 0.7, 0.2, 1) 240ms;
 }
 
 html.js .hero-visual {
@@ -171,7 +168,7 @@ select {
     border-radius: 999px;
     background: var(--accent);
     color: #041018;
-    font-weight: 800;
+    font-weight: 700;
     text-decoration: none;
     box-shadow: var(--shadow);
     transform: translateY(-150%);
@@ -200,7 +197,7 @@ select {
 .navbar.scrolled {
     background: rgba(7, 17, 29, 0.92);
     border-color: rgba(162, 184, 212, 0.12);
-    box-shadow: 0 18px 40px rgba(2, 8, 23, 0.24);
+    box-shadow: var(--shadow-navbar);
 }
 
 .nav-container {
@@ -278,7 +275,7 @@ select {
 .nav-link.active {
     color: var(--bg);
     background: var(--accent);
-    box-shadow: 0 10px 24px rgba(98, 232, 255, 0.24);
+    box-shadow: var(--shadow-accent);
 }
 
 .hamburger {
@@ -399,26 +396,6 @@ select {
     color: var(--text-secondary);
 }
 
-.hero-proofline {
-    display: inline-flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.3rem;
-    max-width: fit-content;
-    margin: 1.15rem 0 0;
-    padding: 0.72rem 0.95rem;
-    border-radius: 16px;
-    border: 1px solid rgba(255, 190, 107, 0.16);
-    background: rgba(13, 23, 38, 0.76);
-    color: var(--accent-secondary);
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    font-weight: 500;
-    line-height: 1.6;
-    letter-spacing: 0.02em;
-    box-shadow: 0 16px 32px rgba(2, 8, 23, 0.16);
-}
-
 .hero-cta {
     display: flex;
     flex-wrap: wrap;
@@ -437,7 +414,7 @@ select {
     border-radius: 999px;
     border: 1px solid transparent;
     text-decoration: none;
-    font-weight: 800;
+    font-weight: 700;
     font-size: 0.94rem;
     cursor: pointer;
     transition:
@@ -456,12 +433,12 @@ select {
 .btn-primary {
     background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
     color: #031018;
-    box-shadow: 0 16px 30px rgba(27, 201, 237, 0.24);
+    box-shadow: var(--shadow-accent-strong);
 }
 
 .btn-primary:hover,
 .btn-primary:focus-visible {
-    box-shadow: 0 18px 36px rgba(27, 201, 237, 0.3);
+    box-shadow: var(--shadow-accent-press);
 }
 
 .btn-secondary {
@@ -507,8 +484,7 @@ select {
     border-radius: 24px;
     border: 1px solid rgba(162, 184, 212, 0.14);
     background: rgba(10, 20, 34, 0.88);
-    box-shadow: var(--shadow);
-    backdrop-filter: blur(8px);
+    box-shadow: var(--shadow-soft);
 }
 
 .hero-panel-main {
@@ -572,7 +548,7 @@ select {
     height: 0.72rem;
     border: 2px solid rgba(98, 232, 255, 0.5);
     background: rgba(7, 17, 29, 0.85);
-    box-shadow: 0 0 0 8px rgba(98, 232, 255, 0.04);
+    box-shadow: 0 0 0 8px rgba(98, 232, 255, 0.03);
 }
 
 section {
@@ -651,7 +627,7 @@ section::before {
 
 .highlight {
     color: var(--text);
-    font-weight: 800;
+    font-weight: 700;
 }
 
 .about {
@@ -672,7 +648,6 @@ section::before {
 .skill-category,
 .experience-item,
 .project-card,
-.cert-card,
 .education-card,
 .contact-link {
     background: linear-gradient(180deg, rgba(17, 31, 49, 0.95) 0%, rgba(13, 23, 38, 0.95) 100%);
@@ -722,26 +697,6 @@ section::before {
     margin-top: 1.15rem;
 }
 
-.about-proof-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.7rem;
-    margin-top: 1.5rem;
-}
-
-.about-proof {
-    display: inline-flex;
-    align-items: center;
-    min-height: 2.25rem;
-    padding: 0.55rem 0.85rem;
-    border-radius: 999px;
-    border: 1px solid rgba(162, 184, 212, 0.16);
-    background: rgba(7, 17, 29, 0.58);
-    color: var(--text);
-    font-size: 0.82rem;
-    font-weight: 700;
-}
-
 .about-highlights {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -757,7 +712,7 @@ section::before {
 .about-card h3 {
     margin: 0 0 0.75rem;
     font-size: 1rem;
-    font-weight: 800;
+    font-weight: 700;
 }
 
 .about-card:hover,
@@ -914,7 +869,7 @@ section::before {
 .experience-item-secondary::before {
     width: 0.68rem;
     height: 0.68rem;
-    box-shadow: 0 0 0 6px rgba(98, 232, 255, 0.05);
+    box-shadow: var(--shadow-ring-soft);
 }
 
 .experience-item-secondary .exp-title {
@@ -938,7 +893,7 @@ section::before {
     height: 0.8rem;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
-    box-shadow: 0 0 0 8px rgba(98, 232, 255, 0.08);
+    box-shadow: var(--shadow-ring-accent);
 }
 
 .experience-item:hover,
@@ -967,7 +922,7 @@ section::before {
 .exp-company {
     margin: 0;
     color: var(--accent);
-    font-weight: 800;
+    font-weight: 700;
 }
 
 .location {
@@ -1042,7 +997,7 @@ section::before {
     background: linear-gradient(135deg, rgba(255, 190, 107, 0.18) 0%, rgba(98, 232, 255, 0.08) 100%);
     color: var(--text);
     font-size: 0.84rem;
-    font-weight: 800;
+    font-weight: 700;
     cursor: pointer;
     transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
 }
@@ -1051,7 +1006,7 @@ section::before {
 .achievement-badge:focus-visible {
     transform: translateY(-2px);
     border-color: rgba(255, 190, 107, 0.34);
-    box-shadow: 0 14px 30px rgba(255, 190, 107, 0.12);
+    box-shadow: var(--shadow-warm);
 }
 
 .projects {
@@ -1205,7 +1160,7 @@ section::before {
     border-radius: 16px;
     border: 1px solid rgba(162, 184, 212, 0.16);
     font-size: 0.88rem;
-    font-weight: 800;
+    font-weight: 700;
     text-decoration: none;
     cursor: pointer;
     transition: transform var(--transition), border-color var(--transition), background var(--transition), color var(--transition), box-shadow var(--transition);
@@ -1254,7 +1209,8 @@ section::before {
     color: var(--text);
     cursor: pointer;
     background: linear-gradient(180deg, rgba(13, 23, 38, 0.88) 0%, rgba(10, 20, 34, 0.82) 100%);
-    box-shadow: 0 14px 32px rgba(2, 8, 23, 0.18);
+    border: 1px solid rgba(162, 184, 212, 0.12);
+    box-shadow: var(--shadow-soft);
     transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
 }
 
@@ -1307,7 +1263,7 @@ section::before {
 .edu-university {
     margin: 0 0 0.45rem;
     color: var(--accent);
-    font-weight: 800;
+    font-weight: 700;
 }
 
 .edu-date {
@@ -1441,7 +1397,7 @@ section::before {
 .contact-value {
     margin-top: 0.25rem;
     font-size: 0.98rem;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--text);
     word-break: break-word;
 }
@@ -1612,7 +1568,7 @@ section::before {
     margin: 0 0 0.85rem;
     color: var(--accent);
     font-size: 0.82rem;
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
 }
@@ -1739,11 +1695,6 @@ section::before {
         max-width: 11ch;
     }
 
-    .hero-proofline {
-        max-width: none;
-        line-height: 1.8;
-    }
-
     .hero-cta,
     .contact-actions {
         flex-direction: column;
@@ -1811,9 +1762,6 @@ section::before {
         backdrop-filter: blur(10px);
     }
 
-    .hero-panel {
-        backdrop-filter: blur(6px);
-    }
 }
 
 @media (max-width: 560px) {
@@ -1876,10 +1824,6 @@ section::before {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    html {
-        scroll-behavior: auto;
-    }
-
     *,
     *::before,
     *::after {
@@ -1892,7 +1836,6 @@ section::before {
     html.js .hero-eyebrow,
     html.js .hero-title,
     html.js .hero-subtitle,
-    html.js .hero-proofline,
     html.js .hero-cta,
     html.js .hero-visual,
     .reveal {
