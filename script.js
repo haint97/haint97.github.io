@@ -146,6 +146,28 @@ function refreshNavbarState() {
     navbar.classList.toggle('scrolled', window.scrollY > 12);
 }
 
+function syncEdgeSectionNav() {
+    const scrollTop = window.scrollY;
+    const viewportBottom = scrollTop + window.innerHeight;
+    const documentHeight = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight
+    );
+    const bottomThreshold = getNavHeight() + 8;
+
+    if (scrollTop <= 8) {
+        setActiveNav('home');
+        return true;
+    }
+
+    if (viewportBottom >= documentHeight - bottomThreshold) {
+        setActiveNav('contact');
+        return true;
+    }
+
+    return false;
+}
+
 function initSectionLinkObserver() {
     const sections = document.querySelectorAll('main section[id]');
     if (!sections.length || !('IntersectionObserver' in window)) return;
@@ -171,6 +193,7 @@ function initSectionLinkObserver() {
             }
         });
 
+        if (syncEdgeSectionNav()) return;
         if (!visibleSections.size) return;
 
         const [activeSectionId] = Array.from(visibleSections.entries()).sort(([, a], [, b]) => {
@@ -245,13 +268,19 @@ function initNavigation() {
         window.clearTimeout(resizeObserverTimeout);
         resizeObserverTimeout = window.setTimeout(() => {
             initSectionLinkObserver();
+            syncEdgeSectionNav();
         }, 120);
     });
 
-    window.addEventListener('scroll', refreshNavbarState, { passive: true });
+    window.addEventListener('scroll', () => {
+        refreshNavbarState();
+        syncEdgeSectionNav();
+    }, { passive: true });
 
     refreshNavbarState();
-    setActiveNav('home');
+    if (!syncEdgeSectionNav()) {
+        setActiveNav('home');
+    }
     initSectionLinkObserver();
 }
 
