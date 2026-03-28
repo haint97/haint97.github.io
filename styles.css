@@ -836,28 +836,6 @@ section::before {
     transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
 }
 
-.experience-item-featured {
-    border-color: rgba(98, 232, 255, 0.16);
-    background:
-        linear-gradient(180deg, rgba(17, 31, 49, 0.98) 0%, rgba(13, 23, 38, 0.95) 100%);
-}
-
-.experience-item-featured::after {
-    content: 'Featured';
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    padding: 0.28rem 0.6rem;
-    border-radius: 999px;
-    border: 1px solid rgba(98, 232, 255, 0.2);
-    background: rgba(7, 17, 29, 0.72);
-    color: var(--accent);
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-}
 
 .experience-item-secondary {
     padding: 1.3rem 1.4rem;
@@ -1728,6 +1706,10 @@ section::before {
     .exp-header {
         flex-direction: column;
         align-items: flex-start;
+    }
+
+    .experience-item-featured {
+        padding-top: 3.7rem;
     }
 
     .exp-date {
