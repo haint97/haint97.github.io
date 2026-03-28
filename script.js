@@ -266,7 +266,7 @@ function assignRevealTargets() {
     const revealGroups = [
         { selector: '.section-title', variant: 'soft' },
         { selector: '.section-intro, .projects-intro', variant: 'soft', baseDelay: 70 },
-        { selector: '.about-lead', variant: 'left' },
+        { selector: '.about-lead', variant: 'soft' },
         { selector: '.about-card', variant: 'soft', stagger: 65 },
         { selector: '.skill-category', variant: 'soft', stagger: 55 },
         { selector: '.experience-item-primary', variant: 'soft', stagger: 60 },
