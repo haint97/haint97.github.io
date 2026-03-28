@@ -41,6 +41,10 @@
     box-sizing: border-box;
 }
 
+html {
+    font-size: clamp(16.25px, 0.22vw + 15.75px, 17.5px);
+}
+
 body {
     margin: 0;
     min-width: 320px;
@@ -1976,6 +1980,10 @@ section::after {
 }
 
 @media (max-width: 720px) {
+    html {
+        font-size: 16px;
+    }
+
     .container,
     .nav-container,
     .hero-content {
