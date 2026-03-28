@@ -5,25 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Hai Nguyen Thai - Software Engineer & Backend Leader specializing in high-performance distributed systems, Event Sourcing, DDD, and CQRS.">
-    <meta name="theme-color" content="#6C8EFF">
-    <title>Hai Nguyen Thai | Senior Software Engineer & AI Engineer</title>
+        content="Hai Nguyen Thai - Software Engineer &amp; Backend Leader specializing in high-performance distributed systems, Event Sourcing, DDD, and CQRS.">
+    <meta name="theme-color" content="#0D1526">
+    <title>Hai Nguyen Thai | Senior Software Engineer &amp; AI Engineer</title>
     <link rel="stylesheet" href="styles.css">
     <!-- AOS (Animate On Scroll) Library -->
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
 </head>
 
 <body>
-
+    <a href="#main-content" class="skip-link">Skip to content</a>
 
     <!-- Navigation -->
     <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
-            <div class="nav-logo" aria-label="Hai Nguyen Thai - Home">
+            <a href="#home" class="nav-logo" aria-label="Hai Nguyen Thai - Home">
                 <span class="logo-bracket">&lt;</span>
                 <span class="logo-text">Thai Hai SWE</span>
                 <span class="logo-bracket">/&gt;</span>
-            </div>
+            </a>
             <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
@@ -51,79 +51,43 @@
                 <li class="nav-item" role="none">
                     <a href="#contact" class="nav-link" role="menuitem">Contact</a>
                 </li>
-                <li class="nav-item theme-item" role="none">
-                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" role="switch"
-                        aria-checked="false">
-                        <span class="moon-icon" aria-hidden="true">🌙</span>
-                    </button>
-                </li>
             </ul>
         </div>
     </nav>
 
+    <main id="main-content">
     <!-- Hero Section -->
-    <section id="home" class="hero">
+        <section id="home" class="hero">
         <div class="hero-content">
             <div class="hero-text">
+                <p class="hero-eyebrow">Backend Platforms + Applied AI</p>
                 <h1 class="hero-title">
-                    <span class="accent">&gt;_</span> Engieering the Future with AI-Powered Intelligence
+                    <span class="accent">&gt;_</span> Engineering the Future with AI-Powered Intelligence
                 </h1>
-                <p class="hero-subtitle"> Software Engineer | Transitioning to AI Engineering | Building intelligent systems & scalable architectures
-
+                <p class="hero-subtitle">Software Engineer transitioning into AI engineering while building intelligent systems, resilient backends, and scalable architectures for real-world use.
                 </p>
                 <div class="hero-cta">
                     <a href="#contact" class="btn btn-primary">Get In Touch</a>
                     <a href="#projects" class="btn btn-secondary">Explore Projects</a>
-                    <!-- <a href="resume.pdf" download="Hai_Nguyen_Thai_resume.pdf" class="btn btn-tertiary">📥 Download
-                        Resume</a> -->
                 </div>
             </div>
-            <div class="hero-visual">
-                <div class="floating-card card-1">
-                    <span class="card-code">&lt; &gt;</span>
-                </div>
-
-
-
-                <div class="floating-card-small card-2">
-                    <span class="card-code" role="img" aria-label="book">📚</span>
-                </div>
-
-                <div class="floating-card-small card-6">
-                    <span class="card-code" role="img" aria-label="artificial intelligence">🧠</span>
-                </div>
-
-                <div class="floating-card-small card-5">
-                    <span class="card-code" role="img" aria-label="coffee">☕</span>
-                </div>
-
-                <div class="floating-card-small card-3">
-                    <span class="card-code" role="img" aria-label="programming computer">🧑‍💻</span>
-                </div>
-
-                <div class="floating-card card-4">
-                    <span class="card-code">&lt;/&gt;</span>
-                </div>
-
-                <div class="floating-card-fun card-fun">
-                        <span>
-    <pre style="font-size: 1.25em; margin: 0;">
-    while(alive)
-    {
-        eating()
-        coffee()
-        vibe_Coding()
-        sleeping()
-        reading()
-    }
-    </pre>
-                        </span>
+            <div class="hero-visual" aria-hidden="true">
+                <div class="hero-grid"></div>
+                <div class="hero-panel hero-panel-main">
+                    <div class="hero-quote">
+                        <pre>while(alive)
+{
+    eating()
+    coffee()
+    vibe_Coding()
+    sleeping()
+    reading()
+}</pre>
                     </div>
-
-
-
-
-
+                </div>
+                <span class="hero-signal hero-signal-a"></span>
+                <span class="hero-signal hero-signal-b"></span>
+                <span class="hero-signal hero-signal-c"></span>
             </div>
         </div>
         <div class="scroll-indicator">
@@ -139,35 +103,61 @@
                 <div class="about-lead" data-aos="fade-right" data-aos-delay="100">
                     <p class="about-kicker">Backend leadership | Distributed systems | Applied AI</p>
                     <h3 class="about-heading">
-                        I build reliable systems for real-world scale and turn complex business requirements into
-                        software that teams can operate, trust, and evolve.
+                        I lead backend systems that need to stay fast, auditable, and dependable at enterprise and
+                        national scale.
                     </h3>
-                    <p>
-                        At <strong>NCS (IRAS)</strong>, I lead the design and development of financial microservices
-                        processing <span class="highlight">multi-million user batches</span> with the auditability and
-                        compliance required for national-scale systems.
-                    </p>
+                    <div class="about-copy">
+                        <p>
+                            I'm a passionate <strong>Backend Leader and Senior Software Engineer</strong> with
+                            <span class="highlight">5+ years of experience</span> designing and building
+                            <span class="highlight">high-throughput distributed systems</span> for enterprise-scale
+                            applications.
+                        </p>
+                        <p>
+                            At <strong>NCS (IRAS)</strong>, I lead the design and development of financial
+                            microservices processing <span class="highlight">multi-million user batches</span> for
+                            Singapore's national tax authority, with <span class="highlight">100% auditability and
+                                compliance</span>.
+                        </p>
+                        <p>
+                            I specialize in <span class="highlight">Event Sourcing, Event-Driven Architecture, DDD,
+                                and CQRS</span>, turning complex requirements into scalable, maintainable solutions.
+                        </p>
+                    </div>
+                    <div class="about-proof-list">
+                        <span class="about-proof">5+ years in backend engineering</span>
+                        <span class="about-proof">Multi-million user batch processing</span>
+                        <span class="about-proof">100% auditability requirements</span>
+                        <span class="about-proof">Cross-functional technical leadership</span>
+                    </div>
                 </div>
                 <div class="about-highlights" data-aos="fade-left" data-aos-delay="150">
                     <article class="about-card">
-                        <h3>What I build</h3>
+                        <h3>Computer Science Foundation</h3>
                         <p>
-                            <span class="highlight">High-throughput distributed systems</span>, event-driven services,
-                            and backend platforms that stay maintainable as complexity grows.
+                            I rely on <span class="highlight">data structures, algorithms, object-oriented
+                                programming, and design patterns</span> to keep systems efficient and maintainable.
                         </p>
                     </article>
                     <article class="about-card">
-                        <h3>How I work</h3>
+                        <h3>Solution-Driven Mindset</h3>
                         <p>
-                            I translate <span class="highlight">complex requirements</span> into actionable plans,
-                            collaborate closely with stakeholders, and stay effective under tight deadlines.
+                            I adapt quickly to emerging technologies, explore practical approaches, and stay focused
+                            on <span class="highlight">solving the real technical bottleneck</span>.
                         </p>
                     </article>
                     <article class="about-card">
-                        <h3>What I'm exploring now</h3>
+                        <h3>Execution Under Pressure</h3>
                         <p>
-                            I'm extending a strong foundation in <span class="highlight">data structures, algorithms,
-                                OOP, and design patterns</span> into practical AI engineering and intelligent systems.
+                            I manage <span class="highlight">multiple projects</span> in fast-paced environments, meet
+                            <span class="highlight">tight deadlines</span>, and collaborate effectively across teams.
+                        </p>
+                    </article>
+                    <article class="about-card">
+                        <h3>Stakeholder Translation</h3>
+                        <p>
+                            I turn <span class="highlight">complex requirements</span> into actionable plans, align
+                            stakeholders early, and keep delivery moving with clear communication.
                         </p>
                     </article>
                 </div>
@@ -185,7 +175,7 @@
 
                 <div class="skill-category" data-aos="fade-up" data-aos-delay="100">
                     <div class="skill-header">
-                        <h3>🏛️ Distributed Systems & Architecture</h3>
+                        <h3>🏛️ Distributed Systems &amp; Architecture</h3>
                     </div>
                     <div class="skill-tags">
                         <span class="skill-tag"><span class="skill-icon">⚡</span> Event-Driven Architecture (EDA)</span>
@@ -209,7 +199,7 @@
 
                 <div class="skill-category">
                     <div class="skill-header">
-                        <h3>🔧 Backend & Messaging</h3>
+                        <h3>🔧 Backend &amp; Messaging</h3>
                     </div>
                     <div class="skill-tags">
                         <span class="skill-tag"><span class="skill-icon">🏗️</span> Entity Framework</span>
@@ -224,7 +214,7 @@
 
                 <div class="skill-category">
                     <div class="skill-header">
-                        <h3>☁️ Cloud & DevOps</h3>
+                        <h3>☁️ Cloud &amp; DevOps</h3>
                     </div>
                     <div class="skill-tags">
                         <span class="skill-tag"><span class="skill-icon">🏠</span> AWS (Lambda, SQS, S3, CloudWatch, API
@@ -237,7 +227,7 @@
 
                 <div class="skill-category">
                     <div class="skill-header">
-                        <h3>🗄️ Databases & Storage</h3>
+                        <h3>🗄️ Databases &amp; Storage</h3>
                     </div>
                     <div class="skill-tags">
                         <span class="skill-tag"><span class="skill-icon">🔵</span> MS SQL Server</span>
@@ -388,9 +378,6 @@
                         <button class="btn-project-details" data-project="llm-telegram-bot" aria-label="View LLM Telegram Bot Details">
                             <span class="details-icon">📋</span> Details
                         </button>
-                        <!-- <a href="#" class="btn-project-link" target="_blank" rel="noopener noreferrer" aria-label="View LLM Telegram Bot on GitHub">
-                            <span class="link-icon">🔗</span> GitHub
-                        </a> -->
                     </div>
                 </div>
 
@@ -419,9 +406,6 @@
                         <button class="btn-project-details" data-project="stock-analysis" aria-label="View Stock Analysis Details">
                             <span class="details-icon">📋</span> Details
                         </button>
-                        <!-- <a href="#" class="btn-project-link" target="_blank" rel="noopener noreferrer" aria-label="View Stock Analysis on GitHub">
-                            <span class="link-icon">🔗</span> GitHub
-                        </a> -->
                     </div>
                 </div>
 
@@ -444,72 +428,12 @@
                         <span class="tech-tag tech-tag-muted">More in modal</span>
                     </div>
                     <div class="project-actions">
-                        <button class="btn-project-demo" data-demo="qa-engine" aria-label="View QA Engine Demo">
-                            <span class="demo-icon">🎬</span> View Demo
-                        </button>
                         <button class="btn-project-details" data-project="qa-engine" aria-label="View QA Engine Details">
                             <span class="details-icon">📋</span> Details
                         </button>
-                        <a href="#" class="btn-project-link" target="_blank" rel="noopener noreferrer" aria-label="View QA Engine on GitHub">
-                            <span class="link-icon">🔗</span> GitHub
-                        </a>
                     </div>
                 </div>
 
-                <!-- Project 5: Serverless Image Processing Pipeline
-                <div class="project-card" data-aos="zoom-in" data-aos-delay="300">
-                    <div class="project-header">
-                        <div class="project-icon">🖼️</div>
-                        <h3 class="project-title">Serverless Image Processing</h3>
-                    </div>
-                    <p class="project-description">
-                        Cloud-native image processing pipeline using AWS Lambda and S3.
-                        Automatically resizes, optimizes, and applies AI-powered enhancements to uploaded images at scale.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">AWS Lambda</span>
-                        <span class="tech-tag">S3</span>
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">OpenCV</span>
-                        <span class="tech-tag">Rekognition</span>
-                    </div>
-                    <div class="project-actions">
-                        <button class="btn-project-demo" data-demo="image-processing" aria-label="View Image Processing Demo">
-                            <span class="demo-icon">🎬</span> View Demo
-                        </button>
-                        <a href="#" class="btn-project-link" target="_blank" rel="noopener noreferrer" aria-label="View Image Processing on GitHub">
-                            <span class="link-icon">🔗</span> GitHub
-                        </a>
-                    </div>
-                </div>
-                -->
-                <!-- Project 6: Distributed Cache System
-                <div class="project-card" data-aos="zoom-in" data-aos-delay="400">
-                    <div class="project-header">
-                        <div class="project-icon">⚡</div>
-                        <h3 class="project-title">Distributed Cache System</h3>
-                    </div>
-                    <p class="project-description">
-                        High-performance distributed caching solution with consistent hashing and automatic failover.
-                        Achieves 99.99% uptime with horizontal scaling and intelligent data partitioning.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Go</span>
-                        <span class="tech-tag">Redis Cluster</span>
-                        <span class="tech-tag">gRPC</span>
-                        <span class="tech-tag">Kubernetes</span>
-                        <span class="tech-tag">Prometheus</span>
-                    </div>
-                    <div class="project-actions">
-                        <button class="btn-project-demo" data-demo="cache-system" aria-label="View Cache System Demo">
-                            <span class="demo-icon">🎬</span> View Demo
-                        </button>
-                        <a href="#" class="btn-project-link" target="_blank" rel="noopener noreferrer" aria-label="View Cache System on GitHub">
-                            <span class="link-icon">🔗</span> GitHub
-                        </a>
-                    </div>
-                </div>
-                -->
             </div>
         </div>
     </section>
@@ -517,7 +441,7 @@
     <!-- Certifications Section -->
     <section id="certifications" class="certifications" data-aos="fade-up" data-aos-duration="800">
         <div class="container">
-            <h2 class="section-title" data-aos="fade-up">Certifications & <span class="accent-text">Achievements</span>
+            <h2 class="section-title" data-aos="fade-up">Certifications &amp; <span class="accent-text">Achievements</span>
             </h2>
             <div class="certs-grid">
                 <button class="cert-card" role="button"
@@ -588,9 +512,13 @@
                     ambitious, or want to collaborate from Singapore or remotely, let's talk.
                 </p>
                 <div class="contact-focus" data-aos="fade-up" data-aos-delay="150">
-                    <span class="contact-pill">Senior Backend & Platform Roles</span>
+                    <span class="contact-pill">Senior Backend &amp; Platform Roles</span>
                     <span class="contact-pill">AI Engineering Collaboration</span>
                     <span class="contact-pill">Singapore / Remote-Friendly</span>
+                </div>
+                <div class="contact-actions" data-aos="fade-up" data-aos-delay="175">
+                    <a href="mailto:nguyenthaihai00@gmail.com" class="btn btn-primary">Email Me</a>
+                    <a href="resume.pdf" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">View Resume</a>
                 </div>
                 <div class="contact-methods">
                     <a href="mailto:nguyenthaihai00@gmail.com" class="contact-link" data-aos="zoom-in"
@@ -620,6 +548,7 @@
             </div>
         </div>
     </section>
+    </main>
 
     <!-- Footer -->
     <footer class="footer" role="contentinfo">
@@ -665,7 +594,7 @@
                 </div>
             </div>
             <div class="cert-modal-body">
-                <video id="projectDemoVideo" controls class="cert-image" style="width: 100%; max-height: 70vh;">
+                <video id="projectDemoVideo" controls class="cert-image project-demo-video">
                     Your browser does not support the video tag.
                 </video>
             </div>
@@ -691,15 +620,15 @@
                     <ul id="projectDetailsFeatures" class="project-details-features"></ul>
                 </div>
                 <div class="project-details-section">
-                    <h3>🛠️ Technologies & Skills</h3>
+                    <h3>🛠️ Technologies &amp; Skills</h3>
                     <div id="projectDetailsTags" class="project-details-tags"></div>
                 </div>
             </div>
             <div class="project-details-footer">
-                <button id="projectDetailsWatchDemo" class="btn btn-primary" style="display:none;">
+                <button id="projectDetailsWatchDemo" class="btn btn-primary" hidden>
                     🎬 Watch Demo
                 </button>
-                <a id="projectDetailsGithub" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="display:none;">
+                <a id="projectDetailsGithub" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" hidden>
                     🔗 GitHub
                 </a>
                 <button class="btn btn-secondary" id="projectDetailsCloseBtn">Close</button>
