@@ -595,33 +595,6 @@ section::before {
     font-size: 0.98rem;
 }
 
-.about .section-title,
-.skills .section-title,
-.experience .section-title,
-.projects .section-title,
-.certifications .section-title,
-.education .section-title {
-    text-align: left;
-}
-
-.about .section-title::after,
-.skills .section-title::after,
-.experience .section-title::after,
-.projects .section-title::after,
-.certifications .section-title::after,
-.education .section-title::after {
-    margin-left: 0;
-    margin-right: auto;
-}
-
-.skills .section-intro,
-.experience .section-intro,
-.projects .projects-intro {
-    margin-left: 0;
-    margin-right: 0;
-    text-align: left;
-}
-
 .reveal {
     opacity: 0;
     transform: translateY(28px);
@@ -665,8 +638,8 @@ section::before {
 
 .about-content {
     display: grid;
-    grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr);
-    gap: 1.2rem;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
     align-items: start;
 }
 
@@ -688,13 +661,26 @@ section::before {
 }
 
 .about-lead {
-    padding: 2.35rem;
+    position: relative;
+    display: block;
+    padding: 2.1rem 2.2rem;
     border-color: rgba(98, 232, 255, 0.18);
     box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.about-lead::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, rgba(98, 232, 255, 0.85) 0%, rgba(255, 190, 107, 0.72) 100%);
+    opacity: 0.84;
 }
 
 .about-kicker {
-    margin: 0 0 1rem;
+    margin: 0 0 0.9rem;
     color: var(--accent);
     font-family: var(--font-mono);
     font-size: 0.8rem;
@@ -703,39 +689,50 @@ section::before {
     text-transform: uppercase;
 }
 
-.about-heading {
-    margin: 0 0 1rem;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(1.55rem, 2vw, 2.35rem);
-    line-height: 1.15;
-    letter-spacing: -0.04em;
-}
-
 .about-lead p,
 .about-card p {
     margin: 0;
-    max-width: 60ch;
+    max-width: none;
     color: var(--text-secondary);
     font-size: 1rem;
+    line-height: 1.75;
 }
 
 .about-copy {
     display: grid;
     gap: 1rem;
-    margin-top: 1.15rem;
+    margin-top: 0;
+    width: 100%;
+    max-width: none;
+}
+
+.about-copy p:first-child {
+    color: var(--text);
+    font-size: 1rem;
+    font-weight: 500;
 }
 
 .about-highlights {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem;
 }
 
 .about-card {
+    position: relative;
     padding: 1.3rem 1.4rem;
     min-height: 100%;
     transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+
+.about-card::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(98, 232, 255, 0.72) 0%, rgba(255, 190, 107, 0.58) 100%);
+    opacity: 0.7;
 }
 
 .about-card h3 {
@@ -1051,6 +1048,7 @@ section::before {
 .projects-intro {
     max-width: 62ch;
     margin: -0.75rem auto 2.35rem;
+    text-align: center;
     color: var(--text-secondary);
     font-size: 0.98rem;
 }
@@ -1699,6 +1697,14 @@ section::before {
         grid-column: auto;
     }
 
+    .about-copy {
+        max-width: none;
+    }
+
+    .about-highlights {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .skills-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -1794,6 +1800,10 @@ section::before {
 
     .about-highlights {
         grid-template-columns: 1fr;
+    }
+
+    .about-lead {
+        padding: 1.55rem;
     }
 
     .exp-header {
