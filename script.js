@@ -1,632 +1,593 @@
-// ==================== HAMBURGER MENU ====================
-document.addEventListener('DOMContentLoaded', function () {
+document.documentElement.classList.add('js');
+
+const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+let prefersReducedMotion = reducedMotionQuery.matches;
+let resizeObserverTimeout = null;
+
+if (typeof reducedMotionQuery.addEventListener === 'function') {
+    reducedMotionQuery.addEventListener('change', (event) => {
+        prefersReducedMotion = event.matches;
+    });
+}
+
+const projectsData = {
+    'llm-telegram-bot': {
+        icon: '🤖',
+        title: 'LLM Telegram Bot',
+        description: 'An intelligent Telegram chatbot powered by a local LLM running on LM Studio, integrated with the OpenAI API for advanced conversational AI with privacy-first local execution.',
+        features: [
+            'Conversation management with commands for clearing history, resetting threads, reviewing summaries, and exporting chats.',
+            'Custom personas and system prompts for switching between assistant modes and saving tailored behavior.',
+            'Streaming responses with a live typing flow for a smoother conversational experience.',
+            'Local-first execution through LM Studio to keep sensitive conversations off third-party servers.',
+        ],
+        tags: ['Python', 'OpenAI', 'Telegram Bot API', 'LM Studio', 'LLM', 'Streaming', 'Prompt Engineering'],
+        video: 'pet-projects/llm-tegegram-bot/LLM Telegram bot.mp4',
+    },
+    'stock-analysis': {
+        icon: '📊',
+        title: 'Stock Analysis AI',
+        description: 'A conversational AI assistant that performs real-time stock market analysis with OpenAI function calling and chained tool usage.',
+        features: [
+            'Lookup of company tickers by name and country for fast symbol discovery.',
+            'Retrieval of live pricing, volume, and supporting market data.',
+            'Trend analysis with moving averages, volatility, momentum, and support and resistance signals.',
+            'Tool-using AI workflow that turns natural language prompts into grounded market reports.',
+        ],
+        tags: ['Python', 'OpenAI', 'Function Calling', 'LLM', 'yfinance', 'Pydantic', 'Technical Analysis', 'Yahoo Finance'],
+        video: 'pet-projects/stock-ai-analysis/Stock BOT AI.mp4',
+    },
+    'qa-engine': {
+        icon: '🧠',
+        title: 'Advanced RAG Multi-Source QA System',
+        description: 'A multi-source QA system that retrieves grounded answers from web, Wikipedia, and files with evaluation, guardrails, and hallucination checks built in.',
+        features: [
+            'Hybrid retrieval combining semantic search, keyword search, reranking, and diversity filtering.',
+            'Query expansion and multi-hop reasoning to improve coverage on complex technical questions.',
+            'RAGAS-based answer evaluation, grounding checks, and hallucination risk scoring.',
+            'Production-minded safety features including prompt-injection checks, PII redaction, and observability reports.',
+        ],
+        tags: ['RAG', 'BM25', 'ChromaDB', 'RAGAS', 'Guardrails', 'Query Expansion', 'Hallucination Detection'],
+        video: null,
+    },
+};
+
+const focusableSelector = [
+    'a[href]',
+    'button:not([disabled])',
+    'textarea:not([disabled])',
+    'input:not([disabled])',
+    'select:not([disabled])',
+    '[tabindex]:not([tabindex="-1"])'
+].join(', ');
+
+let activeModal = null;
+let lastModalTrigger = null;
+let sectionLinkObserver = null;
+
+function getFocusableElements(container) {
+    return Array.from(container.querySelectorAll(focusableSelector))
+        .filter((element) => !element.hasAttribute('disabled') && element.getAttribute('aria-hidden') !== 'true');
+}
+
+function normalizeExternalUrl(url) {
+    if (!url || url === '#') return null;
+    return /^https?:\/\//i.test(url) ? url : `https://${url}`;
+}
+
+function openModalDialog(modal, triggerEl, focusEl) {
+    if (!modal) return;
+
+    lastModalTrigger = triggerEl instanceof HTMLElement ? triggerEl : document.activeElement;
+    activeModal = modal;
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    const nextFocus = focusEl || getFocusableElements(modal)[0] || modal;
+    requestAnimationFrame(() => {
+        if (nextFocus && typeof nextFocus.focus === 'function') {
+            nextFocus.focus();
+        }
+    });
+}
+
+function closeModalDialog(modal, options = {}) {
+    if (!modal) return;
+
+    const { returnFocus = true } = options;
+
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden', 'true');
+
+    if (activeModal === modal) {
+        activeModal = null;
+    }
+
+    document.body.style.overflow = '';
+
+    if (returnFocus && lastModalTrigger instanceof HTMLElement && document.contains(lastModalTrigger)) {
+        requestAnimationFrame(() => lastModalTrigger.focus());
+    }
+
+    if (returnFocus) {
+        lastModalTrigger = null;
+    }
+}
+
+function getNavHeight() {
+    const navbar = document.querySelector('.navbar');
+    return navbar ? navbar.offsetHeight : 0;
+}
+
+function closeMobileMenu() {
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+
+    if (!hamburger || !navMenu) return;
+
+    hamburger.classList.remove('active');
+    hamburger.setAttribute('aria-expanded', 'false');
+    navMenu.classList.remove('active');
+    document.body.classList.remove('menu-open');
+}
+
+function setActiveNav(targetId) {
+    document.querySelectorAll('.nav-link').forEach((link) => {
+        const href = link.getAttribute('href');
+        link.classList.toggle('active', href === `#${targetId}`);
+    });
+}
+
+function refreshNavbarState() {
+    const navbar = document.querySelector('.navbar');
+    if (!navbar) return;
+
+    navbar.classList.toggle('scrolled', window.scrollY > 12);
+}
+
+function initSectionLinkObserver() {
+    const sections = document.querySelectorAll('main section[id]');
+    if (!sections.length || !('IntersectionObserver' in window)) return;
+
+    if (sectionLinkObserver) {
+        sectionLinkObserver.disconnect();
+    }
+
+    const visibleSections = new Map();
+
+    sectionLinkObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            const sectionId = entry.target.getAttribute('id');
+            if (!sectionId) return;
+
+            if (entry.isIntersecting) {
+                visibleSections.set(sectionId, {
+                    ratio: entry.intersectionRatio,
+                    top: Math.abs(entry.boundingClientRect.top)
+                });
+            } else {
+                visibleSections.delete(sectionId);
+            }
+        });
+
+        if (!visibleSections.size) return;
+
+        const [activeSectionId] = Array.from(visibleSections.entries()).sort(([, a], [, b]) => {
+            if (b.ratio !== a.ratio) {
+                return b.ratio - a.ratio;
+            }
+
+            return a.top - b.top;
+        })[0];
+
+        setActiveNav(activeSectionId);
+    }, {
+        rootMargin: `-${getNavHeight() + 24}px 0px -48% 0px`,
+        threshold: [0.12, 0.3, 0.55, 0.78]
+    });
+
+    sections.forEach((section) => {
+        sectionLinkObserver.observe(section);
+    });
+}
+
+function initNavigation() {
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('navMenu');
     const navLinks = document.querySelectorAll('.nav-link');
 
-    // Toggle menu when hamburger is clicked
-    hamburger.addEventListener('click', function () {
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('active');
-        hamburger.setAttribute('aria-expanded', hamburger.classList.contains('active'));
-    });
-
-    // Close menu when a nav link is clicked
-    navLinks.forEach(link => {
-        link.addEventListener('click', function () {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
-            hamburger.setAttribute('aria-expanded', 'false');
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', () => {
+            const expanded = hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active', expanded);
+            hamburger.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+            document.body.classList.toggle('menu-open', expanded);
         });
-    });
-
-    // Close menu when clicking outside
-    document.addEventListener('click', function (event) {
-        const isClickInsideNav = event.target.closest('.navbar');
-        if (!isClickInsideNav && navMenu.classList.contains('active')) {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
-            hamburger.setAttribute('aria-expanded', 'false');
-        }
-    });
-});
-
-// ==================== DYNAMIC FOOTER YEAR ====================
-document.addEventListener('DOMContentLoaded', function () {
-    const currentYear = new Date().getFullYear();
-    const copyrightElement = document.getElementById('copyright-year');
-    if (copyrightElement) {
-        copyrightElement.textContent = currentYear;
     }
-});
 
-// ==================== AOS INITIALIZATION ====================
-window.addEventListener('load', function () {
-    AOS.init({
-        duration: 800,
-        easing: 'ease-in-out',
-        once: false,
-        mirror: true,
-        offset: 100
-    });
-});
+    navLinks.forEach((link) => {
+        link.addEventListener('click', (event) => {
+            const targetSelector = link.getAttribute('href');
+            if (!targetSelector || !targetSelector.startsWith('#')) return;
 
-// ==================== CERTIFICATE MODAL ====================
-const certModal = document.getElementById('certModal');
-const certModalClose = document.getElementById('certModalClose');
-const certImage = document.getElementById('certImage');
-const certVerifyLink = document.getElementById('certVerifyLink');
-const certModalIcon = document.getElementById('certModalIcon');
-const certModalIssuer = document.getElementById('certModalIssuer');
-const achievementBadges = document.querySelectorAll('.achievement-badge[data-cert]');
-const certificationCards = document.querySelectorAll('.cert-card[data-cert-verify]');
+            const target = document.querySelector(targetSelector);
+            if (!target) return;
 
-// Open modal on achievement badge click (for award badges)
-achievementBadges.forEach(badge => {
-    badge.addEventListener('click', function () {
-        const certFile = this.getAttribute('data-cert');
-        const certName = this.textContent.trim();
-
-        // Determine file type based on extension
-        const fileExt = certFile.split('.').pop().toLowerCase();
-        const isMobile = window.innerWidth <= 768;
-
-        // Show modal with image or download for PDF
-        if (fileExt === 'pdf' && !isMobile) {
-            // Try to display PDF
-            certImage.src = `certs/${certFile}`;
-            certImage.alt = certName;
-        } else if (fileExt === 'pdf') {
-            // On mobile, download PDF instead
-            window.open(`certs/${certFile}`, '_blank');
-            return;
-        } else {
-            // For images (jpg, png)
-            certImage.src = `certs/${certFile}`;
-            certImage.alt = certName;
-        }
-
-        // Update modal title
-        document.getElementById('certModalTitle').textContent = certName;
-        certModalIcon.textContent = '🏆';
-        certModalIssuer.textContent = 'Achievement';
-        certVerifyLink.style.display = 'none';
-
-        // Show modal
-        certModal.classList.add('show');
-        certModal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-    });
-
-    // Add keyboard support
-    badge.addEventListener('keypress', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            this.click();
-        }
-    });
-});
-
-// Open modal on certification card click
-certificationCards.forEach(card => {
-    card.addEventListener('click', function (e) {
-        e.preventDefault();
-        const certName = this.getAttribute('data-cert-name');
-        const certIcon = this.getAttribute('data-cert-icon');
-        const certIssuer = this.getAttribute('data-cert-issuer');
-        const verifyUrl = this.getAttribute('data-cert-verify');
-        const certImageFile = this.getAttribute('data-cert-image');
-
-        // Update modal content
-        document.getElementById('certModalTitle').textContent = certName;
-        certModalIcon.textContent = certIcon;
-        certModalIssuer.textContent = certIssuer;
-
-        // Show/hide image based on whether image file exists
-        if (certImageFile) {
-            certImage.src = `certs/${certImageFile}`;
-            certImage.alt = certName;
-            certImage.style.display = 'block';
-        } else {
-            certImage.style.display = 'none';
-        }
-
-        // Show and update verify link
-        certVerifyLink.href = verifyUrl;
-        certVerifyLink.style.display = 'inline-block';
-
-        // Show modal
-        certModal.classList.add('show');
-        certModal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-    });
-
-    // Add keyboard support
-    card.addEventListener('keypress', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            this.click();
-        }
-    });
-});
-
-// Close modal on close button click
-certModalClose.addEventListener('click', closeCertModal);
-
-// Close modal on outside click
-certModal.addEventListener('click', function (e) {
-    if (e.target === certModal) {
-        closeCertModal();
-    }
-});
-
-// Close modal on escape key
-document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && certModal.classList.contains('show')) {
-        closeCertModal();
-    }
-});
-
-function closeCertModal() {
-    certModal.classList.remove('show');
-    certModal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = 'auto';
-}
-
-// ==================== THEME TOGGLE ====================
-const themeToggle = document.getElementById('themeToggle');
-const htmlElement = document.documentElement;
-
-// Always default to dark mode - no localStorage
-htmlElement.setAttribute('data-theme', 'dark');
-themeToggle.setAttribute('aria-checked', 'true');
-
-themeToggle.addEventListener('click', () => {
-    const theme = htmlElement.getAttribute('data-theme');
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-
-    htmlElement.setAttribute('data-theme', newTheme);
-    themeToggle.setAttribute('aria-checked', newTheme === 'dark' ? 'true' : 'false');
-});
-
-// ==================== SMOOTH SCROLL & ACTIVE LINK ====================
-const navLinks = document.querySelectorAll('.nav-link');
-const sections = document.querySelectorAll('section');
-
-// Smooth scroll for nav links
-navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = link.getAttribute('href');
-        const targetSection = document.querySelector(targetId);
-
-        if (targetSection) {
-            // Adjust offset for sticky navbar
-            const navHeight = document.querySelector('.navbar').offsetHeight;
-            const targetPosition = targetSection.offsetTop - navHeight;
+            event.preventDefault();
 
             window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
+                top: target.offsetTop - getNavHeight(),
+                behavior: prefersReducedMotion ? 'auto' : 'smooth'
             });
-        }
-    });
-});
 
-// Update active link on scroll
-window.addEventListener('scroll', () => {
-    let current = '';
-    const navHeight = document.querySelector('.navbar').offsetHeight;
-
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-
-        if (scrollY >= sectionTop - navHeight - 100) {
-            current = section.getAttribute('id');
-        }
+            closeMobileMenu();
+        });
     });
 
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href').slice(1) === current) {
-            link.classList.add('active');
+    document.addEventListener('click', (event) => {
+        if (!navMenu || !navMenu.classList.contains('active')) return;
+        if (event.target.closest('.navbar')) return;
+        closeMobileMenu();
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && navMenu?.classList.contains('active')) {
+            closeMobileMenu();
         }
     });
-});
 
-// ==================== INTERSECTION OBSERVER FOR ANIMATIONS ====================
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 860) {
+            closeMobileMenu();
         }
+
+        window.clearTimeout(resizeObserverTimeout);
+        resizeObserverTimeout = window.setTimeout(() => {
+            initSectionLinkObserver();
+        }, 120);
     });
-}, observerOptions);
 
-// Observe all major elements for fade-in animation
-document.querySelectorAll('section, .experience-item, .cert-card, .skill-category, .stat-card').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(el);
-});
+    window.addEventListener('scroll', refreshNavbarState, { passive: true });
 
-// ==================== NAVBAR SCROLL EFFECT ====================
-const navbar = document.querySelector('.navbar');
+    refreshNavbarState();
+    setActiveNav('home');
+    initSectionLinkObserver();
+}
 
-window.addEventListener('scroll', () => {
-    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-    // Add subtle shadow on scroll
-    if (scrollTop > 50) {
-        navbar.style.boxShadow = 'var(--shadow)';
-    } else {
-        navbar.style.boxShadow = 'none';
+function initFooterYear() {
+    const yearElement = document.getElementById('copyright-year');
+    if (yearElement) {
+        yearElement.textContent = String(new Date().getFullYear());
     }
-});
+}
 
-// ==================== DYNAMIC CODE SNIPPETS ====================
-const codeSnippets = [
-    'const buildScalable = () => { return "microservices"; }',
-    'function* eventSourcing() { yield transactions; }',
-    'class DomainModel { architect(); }',
-    'container.register(Repository).asSingleton().resolve(Service);',
-    'const circuitBreaker = new Resilience().shield(service);',
-    'await kafka.stream().process();',
-    'db.session({ consistency: strong }).write(transaction);',
-    'SELECT * FROM distributed_systems;',
-    'interface HighPerformance { optimize(); }',
-    'async function handleEvents() { replay(); }',
-    'const architecture = new CQRS().design();',
-    'await mutex.acquire(resourceId, { timeout: 5000, retry: 3 });',
-    'db.optimize(indexes, caching);',
-    'await request.ensureUnique(idempotencyKey, () => process());'
-];
+function assignRevealTargets() {
+    const revealGroups = [
+        { selector: '.section-title', variant: 'soft' },
+        { selector: '.section-intro, .projects-intro', variant: 'soft', baseDelay: 70 },
+        { selector: '.about-lead', variant: 'left' },
+        { selector: '.about-card', variant: 'soft', stagger: 65 },
+        { selector: '.skill-category', variant: 'soft', stagger: 55 },
+        { selector: '.experience-item-featured', variant: 'soft', stagger: 60 },
+        { selector: '.experience-item-secondary', variant: 'soft', baseDelay: 80, stagger: 45 },
+        { selector: '.project-card', variant: 'scale', stagger: 70 },
+        { selector: '.cert-card', variant: 'soft', stagger: 50 },
+        { selector: '.education-card', variant: 'soft' },
+        { selector: '.contact-content', variant: 'soft' },
+        { selector: '.footer', variant: 'soft' }
+    ];
 
-// Generate random code snippets for background
-function generateCodeBackground() {
-    const background = document.querySelector('.code-background');
-    const snippets = background.querySelectorAll('.code-snippet');
-
-    // Create a shuffled copy of the snippets
-    const shuffled = [...codeSnippets].sort(() => Math.random() - 0.5);
-
-    snippets.forEach((snippet, index) => {
-        // Use the shuffled array, and wrap around if there are more elements than snippets
-        snippet.textContent = shuffled[index % shuffled.length];
+    revealGroups.forEach(({ selector, variant = 'soft', baseDelay = 0, stagger = 0 }) => {
+        document.querySelectorAll(selector).forEach((element, index) => {
+            element.classList.add('reveal');
+            element.dataset.reveal = variant;
+            element.style.setProperty('--reveal-delay', `${baseDelay + (index * stagger)}ms`);
+        });
     });
 }
 
-generateCodeBackground();
-// ==================== FLOATING CARD INTERACTION ====================
-const floatingCards = document.querySelectorAll('.floating-card');
+function initMotionSystem() {
+    const root = document.documentElement;
 
-floatingCards.forEach(card => {
-    card.addEventListener('mouseenter', () => {
-        card.style.boxShadow = '0 0 30px rgba(0, 255, 136, 0.6)';
-        card.style.transform = 'scale(1.1)';
-    });
+    assignRevealTargets();
 
-    card.addEventListener('mouseleave', () => {
-        card.style.boxShadow = 'none';
-        card.style.transform = 'scale(1)';
-    });
-});
-
-// ==================== PARALLAX EFFECT FOR CODE BACKGROUND ====================
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const codeBackground = document.querySelectorAll('.code-snippet');
-
-    codeBackground.forEach((snippet, index) => {
-        const speed = 0.5 + (index * 0.1);
-        snippet.style.transform = `translateY(${scrolled * speed}px)`;
-    });
-});
-
-// ==================== SKILL CARDS HOVER EFFECT ====================
-const skillTags = document.querySelectorAll('.skill-tag');
-
-skillTags.forEach(tag => {
-    tag.addEventListener('mouseenter', () => {
-        // Animate all tags
-        skillTags.forEach(t => {
-            if (t !== tag) {
-                t.style.opacity = '0.5';
-                t.style.transform = 'scale(0.95)';
-            }
-        });
-        tag.style.transform = 'scale(1.05)';
-        tag.style.opacity = '1';
-    });
-
-    tag.addEventListener('mouseleave', () => {
-        skillTags.forEach(t => {
-            t.style.opacity = '1';
-            t.style.transform = 'scale(1)';
-        });
-    });
-});
-
-// ==================== FORM VALIDATION & SUBMISSION ====================
-const contactLinks = document.querySelectorAll('.contact-link');
-
-contactLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        // Allow default behavior (opening email/phone)
-        // Add a subtle animation
-        link.style.animation = 'pulse 0.5s ease';
-        setTimeout(() => {
-            link.style.animation = '';
-        }, 500);
-    });
-});
-
-// Add pulse animation
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes pulse {
-        0%, 100% {
-            transform: translateY(-5px);
-        }
-        50% {
-            transform: translateY(0);
-        }
+    const revealElements = document.querySelectorAll('.reveal');
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+        revealElements.forEach((element) => element.classList.add('is-visible'));
+        root.classList.add('page-ready');
+        return;
     }
-`;
-document.head.appendChild(style);
 
-// ==================== EXPERIENCE TIMELINE ANIMATION ====================
-const experienceItems = document.querySelectorAll('.experience-item');
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
 
-const timelineObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-            // Stagger animation for each item
-            setTimeout(() => {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateX(0)';
-            }, index * 100);
-        }
-    });
-}, { threshold: 0.1 });
-
-experienceItems.forEach((item, index) => {
-    item.style.opacity = '0';
-    item.style.transform = 'translateX(-20px)';
-    item.style.transition = `opacity 0.6s ease, transform 0.6s ease`;
-    timelineObserver.observe(item);
-});
-
-// ==================== BUTTON RIPPLE EFFECT ====================
-const buttons = document.querySelectorAll('.btn');
-
-buttons.forEach(button => {
-    button.addEventListener('click', function (e) {
-        const ripple = document.createElement('span');
-        const rect = this.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        const x = e.clientX - rect.left - size / 2;
-        const y = e.clientY - rect.top - size / 2;
-
-        ripple.style.width = ripple.style.height = size + 'px';
-        ripple.style.left = x + 'px';
-        ripple.style.top = y + 'px';
-        ripple.classList.add('ripple');
-
-        // Create ripple style if not exists
-        if (!document.querySelector('style[data-ripple]')) {
-            const rippleStyle = document.createElement('style');
-            rippleStyle.setAttribute('data-ripple', '');
-            rippleStyle.textContent = `
-                .btn {
-                    position: relative;
-                    overflow: hidden;
-                }
-                .ripple {
-                    position: absolute;
-                    border-radius: 50%;
-                    background: rgba(255, 255, 255, 0.6);
-                    transform: scale(0);
-                    animation: ripple-animation 0.6s ease-out;
-                    pointer-events: none;
-                }
-                @keyframes ripple-animation {
-                    to {
-                        transform: scale(4);
-                        opacity: 0;
-                    }
-                }
-            `;
-            document.head.appendChild(rippleStyle);
-        }
-
-        this.appendChild(ripple);
-
-        setTimeout(() => {
-            ripple.remove();
-        }, 600);
-    });
-});
-
-// ==================== PERFORMANCE OPTIMIZATION ====================
-// Lazy load images and defer heavy animations
-if ('IntersectionObserver' in window) {
-    const imageObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                if (img.dataset.src) {
-                    img.src = img.dataset.src;
-                    imageObserver.unobserve(img);
-                }
-            }
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
         });
+    }, {
+        rootMargin: '0px 0px -12% 0px',
+        threshold: 0.14
     });
 
-    document.querySelectorAll('img[data-src]').forEach(img => {
-        imageObserver.observe(img);
+    revealElements.forEach((element) => revealObserver.observe(element));
+
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            root.classList.add('page-ready');
+        });
     });
 }
 
-// ==================== KEYBOARD NAVIGATION ====================
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        // Could close modals or popovers if added
+function initGlobalModalKeyboardHandling() {
+    document.addEventListener('keydown', (event) => {
+        if (!activeModal) return;
+
+        if (event.key === 'Escape') {
+            const closeButton = activeModal.querySelector('[data-modal-close], .cert-modal-close, .project-details-close');
+            if (closeButton instanceof HTMLElement) {
+                closeButton.click();
+            }
+        }
+
+        if (event.key !== 'Tab') return;
+
+        const focusableElements = getFocusableElements(activeModal);
+        if (!focusableElements.length) {
+            event.preventDefault();
+            return;
+        }
+
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (!activeModal.contains(document.activeElement)) {
+            event.preventDefault();
+            firstElement.focus();
+            return;
+        }
+
+        if (event.shiftKey && document.activeElement === firstElement) {
+            event.preventDefault();
+            lastElement.focus();
+        } else if (!event.shiftKey && document.activeElement === lastElement) {
+            event.preventDefault();
+            firstElement.focus();
+        }
+    });
+}
+
+function initCertificationModal() {
+    const certModal = document.getElementById('certModal');
+    const certModalClose = document.getElementById('certModalClose');
+    const certImage = document.getElementById('certImage');
+    const certVerifyLink = document.getElementById('certVerifyLink');
+    const certModalIcon = document.getElementById('certModalIcon');
+    const certModalIssuer = document.getElementById('certModalIssuer');
+    const certModalTitle = document.getElementById('certModalTitle');
+
+    if (!certModal || !certModalClose || !certImage || !certVerifyLink || !certModalIcon || !certModalIssuer || !certModalTitle) {
+        return;
     }
 
-    // Quick navigation with keyboard
-    if (e.ctrlKey || e.metaKey) {
-        const keyMap = {
-            'h': '#home',
-            'a': '#about',
-            's': '#skills',
-            'e': '#experience',
-            'p': '#projects',
-            'c': '#contact'
+    function closeCertModal() {
+        certImage.removeAttribute('src');
+        certImage.alt = 'Certificate';
+        certImage.hidden = true;
+        certVerifyLink.removeAttribute('href');
+        certVerifyLink.hidden = true;
+        closeModalDialog(certModal);
+    }
+
+    document.querySelectorAll('.achievement-badge[data-cert]').forEach((badge) => {
+        const handleOpen = () => {
+            const certFile = badge.getAttribute('data-cert');
+            if (!certFile) return;
+
+            certImage.src = `certs/${certFile}`;
+            certImage.alt = badge.textContent.trim();
+            certImage.hidden = false;
+            certModalTitle.textContent = badge.textContent.trim();
+            certModalIcon.textContent = '🏆';
+            certModalIssuer.textContent = 'Achievement';
+            certVerifyLink.hidden = true;
+
+            openModalDialog(certModal, badge, certModalClose);
         };
 
-        if (keyMap[e.key]) {
-            e.preventDefault();
-            const target = document.querySelector(keyMap[e.key]);
-            if (target) {
-                const navHeight = document.querySelector('.navbar').offsetHeight;
-                window.scrollTo({
-                    top: target.offsetTop - navHeight,
-                    behavior: 'smooth'
-                });
+        badge.addEventListener('click', handleOpen);
+    });
+
+    document.querySelectorAll('.cert-card').forEach((card) => {
+        const handleOpen = () => {
+            const certName = card.getAttribute('data-cert-name') || 'Certificate';
+            const certIcon = card.getAttribute('data-cert-icon') || '🏆';
+            const certIssuer = card.getAttribute('data-cert-issuer') || '';
+            const certImageFile = card.getAttribute('data-cert-image');
+            const verifyUrl = normalizeExternalUrl(card.getAttribute('data-cert-verify'));
+
+            certModalTitle.textContent = certName;
+            certModalIcon.textContent = certIcon;
+            certModalIssuer.textContent = certIssuer;
+
+            if (certImageFile) {
+                certImage.src = `certs/${certImageFile}`;
+                certImage.alt = certName;
+                certImage.hidden = false;
+            } else {
+                certImage.removeAttribute('src');
+                certImage.alt = 'Certificate';
+                certImage.hidden = true;
             }
-        }
-    }
-});
 
-// ==================== MOBILE MENU CLOSE ON CLICK ====================
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        // If there's a mobile menu, close it
-        const navMenu = document.querySelector('.nav-menu');
-        if (navMenu && navMenu.classList.contains('active')) {
-            navMenu.classList.remove('active');
+            if (verifyUrl) {
+                certVerifyLink.href = verifyUrl;
+                certVerifyLink.hidden = false;
+            } else {
+                certVerifyLink.removeAttribute('href');
+                certVerifyLink.hidden = true;
+            }
+
+            openModalDialog(certModal, card, certModalClose);
+        };
+
+        card.addEventListener('click', handleOpen);
+    });
+
+    certModalClose.setAttribute('data-modal-close', 'true');
+    certModalClose.addEventListener('click', closeCertModal);
+    certModal.addEventListener('click', (event) => {
+        if (event.target === certModal) {
+            closeCertModal();
         }
     });
-});
+}
 
-// ==================== PAGE LOAD ANIMATIONS ====================
-window.addEventListener('load', () => {
-    // Trigger animations after page load
-    document.querySelectorAll('[data-animate]').forEach(el => {
-        el.style.animation = 'fadeIn 0.6s ease forwards';
+function initProjectCards() {
+    document.querySelectorAll('.project-card').forEach((card) => {
+        const demoButton = card.querySelector('.btn-project-demo');
+        const actions = card.querySelector('.project-actions');
+
+        if (demoButton && !demoButton.getAttribute('data-video')) {
+            demoButton.hidden = true;
+        }
+
+        if (actions) {
+            const visibleActions = Array.from(actions.children).filter((child) => !child.hidden);
+            actions.classList.toggle('project-actions-single', visibleActions.length === 1);
+        }
     });
-});
+}
 
-// Add page load animation style
-const loadStyle = document.createElement('style');
-loadStyle.textContent = `
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+function initProjectDemoModal() {
+    const projectDemoModal = document.getElementById('projectDemoModal');
+    const projectDemoClose = document.getElementById('projectDemoClose');
+    const projectDemoVideo = document.getElementById('projectDemoVideo');
+    const projectDemoTitle = document.getElementById('projectDemoTitle');
+
+    if (!projectDemoModal || !projectDemoClose || !projectDemoVideo || !projectDemoTitle) {
+        return { openProjectDemo: () => {} };
     }
-`;
-document.head.appendChild(loadStyle);
 
-// ==================== ACCESSIBILITY IMPROVEMENTS ====================
-// Add focus visible for keyboard navigation
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Tab') {
-        document.body.classList.add('keyboard-nav');
+    projectDemoVideo.playsInline = true;
+    projectDemoVideo.preload = 'none';
+
+    function closeProjectDemo() {
+        projectDemoVideo.pause();
+        projectDemoVideo.removeAttribute('src');
+        projectDemoVideo.removeAttribute('poster');
+        projectDemoVideo.load();
+        closeModalDialog(projectDemoModal);
     }
-});
 
-document.addEventListener('mousedown', () => {
-    document.body.classList.remove('keyboard-nav');
-});
+    function openProjectDemo(triggerButton) {
+        if (!(triggerButton instanceof HTMLElement)) return;
 
-// Add keyboard nav styles
-const a11yStyle = document.createElement('style');
-a11yStyle.textContent = `
-    body.keyboard-nav *:focus {
-        outline: 2px solid var(--primary-color);
-        outline-offset: 2px;
-    }
-`;
-document.head.appendChild(a11yStyle);
+        const videoPath = triggerButton.getAttribute('data-video');
+        if (!videoPath) return;
+        const posterPath = triggerButton.getAttribute('data-poster');
 
-// ==================== PROJECT DEMO BUTTONS ====================
-const projectDemoButtons = document.querySelectorAll('.btn-project-demo');
-const projectDemoModal = document.getElementById('projectDemoModal');
-const projectDemoClose = document.getElementById('projectDemoClose');
-const projectDemoVideo = document.getElementById('projectDemoVideo');
-const projectDemoTitle = document.getElementById('projectDemoTitle');
-
-projectDemoButtons.forEach(button => {
-    button.addEventListener('click', function() {
-        const demoType = this.getAttribute('data-demo');
-        const videoPath = this.getAttribute('data-video');
-
-        if (videoPath) {
-            // Show video modal
-            projectDemoVideo.src = videoPath;
-            projectDemoTitle.textContent = this.closest('.project-card').querySelector('.project-title').textContent;
-            projectDemoModal.classList.add('show');
-            projectDemoModal.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
-
-            // Auto-play video
-            projectDemoVideo.play().catch(err => {
-                console.log('Auto-play prevented:', err);
-            });
+        const titleElement = triggerButton.closest('.project-card')?.querySelector('.project-title');
+        projectDemoTitle.textContent = titleElement ? titleElement.textContent : 'Project Demo';
+        if (posterPath) {
+            projectDemoVideo.poster = posterPath;
         } else {
-            // Placeholder for demo functionality
-            alert(`Demo for ${demoType} would be displayed here.\n\nYou can replace this with:\n- A modal showing project screenshots\n- An embedded video demo\n- A link to a live demo\n- An interactive project walkthrough`);
+            projectDemoVideo.removeAttribute('poster');
         }
-    });
-});
+        projectDemoVideo.src = videoPath;
+        projectDemoVideo.currentTime = 0;
 
-// Close project demo modal
-if (projectDemoClose) {
-    projectDemoClose.addEventListener('click', closeProjectDemoModal);
-}
+        openModalDialog(projectDemoModal, triggerButton, projectDemoClose);
 
-// Close modal on outside click
-if (projectDemoModal) {
-    projectDemoModal.addEventListener('click', function (e) {
-        if (e.target === projectDemoModal) {
-            closeProjectDemoModal();
-        }
-    });
-}
-
-// Close modal on escape key
-document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && projectDemoModal && projectDemoModal.classList.contains('show')) {
-        closeProjectDemoModal();
-    }
-});
-
-function closeProjectDemoModal() {
-    if (projectDemoModal) {
-        projectDemoModal.classList.remove('show');
-        projectDemoModal.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = 'auto';
-
-        // Stop and reset video
-        if (projectDemoVideo) {
-            projectDemoVideo.pause();
-            projectDemoVideo.currentTime = 0;
-            projectDemoVideo.src = '';
+        const playAttempt = projectDemoVideo.play();
+        if (playAttempt && typeof playAttempt.catch === 'function') {
+            playAttempt.catch(() => {});
         }
     }
+
+    projectDemoClose.setAttribute('data-modal-close', 'true');
+    projectDemoClose.addEventListener('click', closeProjectDemo);
+    projectDemoModal.addEventListener('click', (event) => {
+        if (event.target === projectDemoModal) {
+            closeProjectDemo();
+        }
+    });
+
+    document.querySelectorAll('.btn-project-demo').forEach((button) => {
+        button.addEventListener('click', () => openProjectDemo(button));
+    });
+
+    return { openProjectDemo };
 }
+
+function initProjectDetailsModal(openProjectDemo) {
+    const projectDetailsModal = document.getElementById('projectDetailsModal');
+    const projectDetailsClose = document.getElementById('projectDetailsClose');
+    const projectDetailsCloseBtn = document.getElementById('projectDetailsCloseBtn');
+    const projectDetailsIcon = document.getElementById('projectDetailsIcon');
+    const projectDetailsTitle = document.getElementById('projectDetailsTitle');
+    const projectDetailsSummary = document.getElementById('projectDetailsSummary');
+    const projectDetailsFeatures = document.getElementById('projectDetailsFeatures');
+    const projectDetailsTags = document.getElementById('projectDetailsTags');
+    const projectDetailsWatchDemo = document.getElementById('projectDetailsWatchDemo');
+
+    if (!projectDetailsModal || !projectDetailsClose || !projectDetailsCloseBtn || !projectDetailsIcon || !projectDetailsTitle || !projectDetailsSummary || !projectDetailsFeatures || !projectDetailsTags || !projectDetailsWatchDemo) {
+        return;
+    }
+
+    function closeProjectDetails(options = {}) {
+        closeModalDialog(projectDetailsModal, options);
+    }
+
+    projectDetailsClose.setAttribute('data-modal-close', 'true');
+    projectDetailsClose.addEventListener('click', () => closeProjectDetails());
+    projectDetailsCloseBtn.addEventListener('click', () => closeProjectDetails());
+
+    projectDetailsModal.addEventListener('click', (event) => {
+        if (event.target === projectDetailsModal) {
+            closeProjectDetails();
+        }
+    });
+
+    document.querySelectorAll('.btn-project-details').forEach((button) => {
+        button.addEventListener('click', () => {
+            const projectKey = button.getAttribute('data-project');
+            const project = projectKey ? projectsData[projectKey] : null;
+            if (!project) return;
+
+            projectDetailsIcon.textContent = project.icon;
+            projectDetailsTitle.textContent = project.title;
+            projectDetailsSummary.textContent = project.description;
+            projectDetailsFeatures.innerHTML = project.features.map((feature) => `<li>${feature}</li>`).join('');
+            projectDetailsTags.innerHTML = project.tags.map((tag) => `<span class="tech-tag">${tag}</span>`).join('');
+
+            if (project.video) {
+                projectDetailsWatchDemo.hidden = false;
+                projectDetailsWatchDemo.onclick = () => {
+                    closeProjectDetails({ returnFocus: false });
+                    const demoButton = document.querySelector(`.btn-project-demo[data-demo="${projectKey}"]`);
+                    if (demoButton) {
+                        openProjectDemo(demoButton);
+                    }
+                };
+            } else {
+                projectDetailsWatchDemo.hidden = true;
+                projectDetailsWatchDemo.onclick = null;
+            }
+
+            openModalDialog(projectDetailsModal, button, projectDetailsClose);
+        });
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    initFooterYear();
+    initMotionSystem();
+    initNavigation();
+    initGlobalModalKeyboardHandling();
+    initCertificationModal();
+    initProjectCards();
+    const { openProjectDemo } = initProjectDemoModal();
+    initProjectDetailsModal(openProjectDemo);
+});
