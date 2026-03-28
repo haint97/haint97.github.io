@@ -266,7 +266,7 @@ function assignRevealTargets() {
     const revealGroups = [
         { selector: '.section-title', variant: 'soft' },
         { selector: '.section-intro, .projects-intro', variant: 'soft', baseDelay: 70 },
-        { selector: '.about-lead', variant: 'left' },
+        { selector: '.about-lead', variant: 'soft' },
         { selector: '.about-card', variant: 'soft', stagger: 65 },
         { selector: '.skill-category', variant: 'soft', stagger: 55 },
         { selector: '.experience-item-primary', variant: 'soft', stagger: 60 },
@@ -318,6 +318,101 @@ function initMotionSystem() {
             root.classList.add('page-ready');
         });
     });
+}
+
+function initHeroQuoteTypewriter() {
+    const quoteCode = document.querySelector('.hero-quote-code');
+    const lines = Array.from(document.querySelectorAll('.hero-quote-line'));
+    if (!quoteCode || !lines.length) {
+        return;
+    }
+
+    const lineTexts = lines.map((line) => line.getAttribute('data-text') || line.textContent || '');
+
+    if (prefersReducedMotion) {
+        quoteCode.classList.add('is-typewriter-active');
+        lines.forEach((line, index) => {
+            line.textContent = lineTexts[index];
+            line.classList.remove('is-typing');
+        });
+        return;
+    }
+
+    quoteCode.classList.add('is-typewriter-active');
+    lines.forEach((line) => {
+        line.textContent = '';
+        line.classList.remove('is-typing');
+    });
+
+    let currentLineIndex = 0;
+    let currentCharIndex = 0;
+    let timeoutId = null;
+
+    const initialDelay = 900;
+    const typeDelay = 52;
+    const spaceDelay = 20;
+    const linePause = 180;
+    const cyclePause = 1500;
+
+    const queueNextStep = (delay) => {
+        timeoutId = window.setTimeout(step, delay);
+    };
+
+    const clearTypingState = () => {
+        lines.forEach((line) => line.classList.remove('is-typing'));
+    };
+
+    const resetLines = () => {
+        clearTypingState();
+        lines.forEach((line) => {
+            line.textContent = '';
+        });
+        currentLineIndex = 0;
+        currentCharIndex = 0;
+    };
+
+    const step = () => {
+        if (prefersReducedMotion) {
+            clearTypingState();
+            lines.forEach((line, index) => {
+                line.textContent = lineTexts[index];
+            });
+            return;
+        }
+
+        if (currentLineIndex >= lines.length) {
+            queueNextStep(cyclePause);
+            currentLineIndex = -1;
+            return;
+        }
+
+        if (currentLineIndex === -1) {
+            resetLines();
+            queueNextStep(240);
+            return;
+        }
+
+        const line = lines[currentLineIndex];
+        const lineText = lineTexts[currentLineIndex];
+
+        clearTypingState();
+        line.classList.add('is-typing');
+
+        if (currentCharIndex < lineText.length) {
+            currentCharIndex += 1;
+            line.textContent = lineText.slice(0, currentCharIndex);
+            const typedCharacter = lineText[currentCharIndex - 1];
+            queueNextStep(typedCharacter === ' ' ? spaceDelay : typeDelay);
+            return;
+        }
+
+        line.classList.remove('is-typing');
+        currentLineIndex += 1;
+        currentCharIndex = 0;
+        queueNextStep(linePause);
+    };
+
+    queueNextStep(initialDelay);
 }
 
 function initGlobalModalKeyboardHandling() {
@@ -584,6 +679,7 @@ function initProjectDetailsModal(openProjectDemo) {
 document.addEventListener('DOMContentLoaded', () => {
     initFooterYear();
     initMotionSystem();
+    initHeroQuoteTypewriter();
     initNavigation();
     initGlobalModalKeyboardHandling();
     initCertificationModal();
