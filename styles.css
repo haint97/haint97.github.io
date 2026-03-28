@@ -595,6 +595,33 @@ section::before {
     font-size: 0.98rem;
 }
 
+.about .section-title,
+.skills .section-title,
+.experience .section-title,
+.projects .section-title,
+.certifications .section-title,
+.education .section-title {
+    text-align: left;
+}
+
+.about .section-title::after,
+.skills .section-title::after,
+.experience .section-title::after,
+.projects .section-title::after,
+.certifications .section-title::after,
+.education .section-title::after {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+.skills .section-intro,
+.experience .section-intro,
+.projects .projects-intro {
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
+}
+
 .reveal {
     opacity: 0;
     transform: translateY(28px);
@@ -638,8 +665,8 @@ section::before {
 
 .about-content {
     display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.95fr);
-    gap: 1.5rem;
+    grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr);
+    gap: 1.2rem;
     align-items: start;
 }
 
@@ -662,6 +689,8 @@ section::before {
 
 .about-lead {
     padding: 2.35rem;
+    border-color: rgba(98, 232, 255, 0.18);
+    box-shadow: var(--shadow);
 }
 
 .about-kicker {
@@ -699,19 +728,19 @@ section::before {
 
 .about-highlights {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     gap: 1rem;
 }
 
 .about-card {
-    padding: 1.45rem 1.5rem;
+    padding: 1.3rem 1.4rem;
     min-height: 100%;
     transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
 }
 
 .about-card h3 {
-    margin: 0 0 0.75rem;
-    font-size: 1rem;
+    margin: 0 0 0.6rem;
+    font-size: 0.96rem;
     font-weight: 700;
 }
 
@@ -728,7 +757,7 @@ section::before {
 
 .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem;
 }
 
@@ -736,7 +765,9 @@ section::before {
     position: relative;
     overflow: hidden;
     border-radius: 18px;
-    padding: 1.35rem;
+    padding: 1.2rem;
+    background: linear-gradient(180deg, rgba(13, 23, 38, 0.88) 0%, rgba(10, 20, 34, 0.88) 100%);
+    box-shadow: 0 14px 28px rgba(2, 8, 23, 0.12);
     transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
 }
 
@@ -745,7 +776,7 @@ section::before {
     position: absolute;
     inset: 0 auto auto 0;
     width: 100%;
-    height: 2px;
+    height: 1px;
     background: linear-gradient(90deg, rgba(98, 232, 255, 0.9) 0%, rgba(255, 190, 107, 0.72) 100%);
     opacity: 0.72;
 }
@@ -764,10 +795,12 @@ section::before {
 .skill-header h3,
 .skill-category h3 {
     margin: 0;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
 }
 
 .skill-tags,
@@ -804,10 +837,6 @@ section::before {
     background: rgba(17, 31, 49, 0.92);
 }
 
-.skill-icon {
-    font-size: 0.88rem;
-}
-
 .experience {
     background: linear-gradient(180deg, rgba(255, 190, 107, 0.04) 0%, rgba(13, 23, 38, 0) 18%);
 }
@@ -836,6 +865,34 @@ section::before {
     transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
 }
 
+.experience-item-primary {
+    padding: 1.85rem 1.75rem;
+    border-color: rgba(98, 232, 255, 0.18);
+    background:
+        linear-gradient(180deg, rgba(18, 34, 53, 0.98) 0%, rgba(10, 20, 34, 0.98) 100%);
+    box-shadow: var(--shadow);
+}
+
+.experience-item-primary::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 1.55rem;
+    right: 1.55rem;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(98, 232, 255, 0.92) 0%, rgba(255, 190, 107, 0.78) 100%);
+}
+
+.experience-item-primary .exp-title {
+    font-size: 1.28rem;
+}
+
+.experience-item-primary .exp-date {
+    background: rgba(7, 17, 29, 0.84);
+    border-color: rgba(98, 232, 255, 0.22);
+    color: var(--text);
+}
 
 .experience-item-secondary {
     padding: 1.3rem 1.4rem;
@@ -994,7 +1051,6 @@ section::before {
 .projects-intro {
     max-width: 62ch;
     margin: -0.75rem auto 2.35rem;
-    text-align: center;
     color: var(--text-secondary);
     font-size: 0.98rem;
 }
@@ -1012,6 +1068,9 @@ section::before {
     display: flex;
     flex-direction: column;
     padding: 1.65rem;
+    border-color: rgba(98, 232, 255, 0.16);
+    background: linear-gradient(180deg, rgba(17, 31, 49, 0.97) 0%, rgba(10, 20, 34, 0.97) 100%);
+    min-height: 100%;
     transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
 }
 
@@ -1063,7 +1122,12 @@ section::before {
     border-radius: 18px;
     background: linear-gradient(135deg, rgba(98, 232, 255, 0.16) 0%, rgba(255, 190, 107, 0.12) 100%);
     border: 1px solid rgba(162, 184, 212, 0.16);
-    font-size: 1.8rem;
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.92rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     flex-shrink: 0;
 }
 
@@ -1100,12 +1164,6 @@ section::before {
 .tech-tag {
     color: var(--text);
     background: rgba(7, 17, 29, 0.66);
-}
-
-.tech-tag-muted {
-    color: var(--text-muted);
-    border-style: dashed;
-    background: transparent;
 }
 
 .project-actions {
@@ -1182,13 +1240,13 @@ section::before {
 
 .cert-card {
     border-radius: 18px;
-    padding: 1.25rem;
+    padding: 1.1rem;
     text-align: left;
     color: var(--text);
     cursor: pointer;
-    background: linear-gradient(180deg, rgba(13, 23, 38, 0.88) 0%, rgba(10, 20, 34, 0.82) 100%);
+    background: linear-gradient(180deg, rgba(13, 23, 38, 0.78) 0%, rgba(10, 20, 34, 0.74) 100%);
     border: 1px solid rgba(162, 184, 212, 0.12);
-    box-shadow: var(--shadow-soft);
+    box-shadow: 0 12px 24px rgba(2, 8, 23, 0.1);
     transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
 }
 
@@ -1200,13 +1258,13 @@ section::before {
 }
 
 .cert-icon {
-    width: 48px;
-    height: 48px;
-    margin-bottom: 0.9rem;
-    border-radius: 14px;
+    width: 44px;
+    height: 44px;
+    margin-bottom: 0.8rem;
+    border-radius: 12px;
     background: linear-gradient(135deg, rgba(98, 232, 255, 0.16) 0%, rgba(255, 190, 107, 0.12) 100%);
     border: 1px solid rgba(162, 184, 212, 0.16);
-    font-size: 1.8rem;
+    font-size: 1.5rem;
 }
 
 .cert-card h3 {
@@ -1223,11 +1281,11 @@ section::before {
 
 .education-card {
     border-radius: 22px;
-    padding: 1.9rem;
-    max-width: 720px;
-    margin: 0 auto;
-    background: linear-gradient(180deg, rgba(13, 23, 38, 0.9) 0%, rgba(10, 20, 34, 0.84) 100%);
-    box-shadow: 0 16px 36px rgba(2, 8, 23, 0.18);
+    padding: 1.6rem 1.75rem;
+    max-width: 680px;
+    margin: 0;
+    background: linear-gradient(180deg, rgba(13, 23, 38, 0.82) 0%, rgba(10, 20, 34, 0.78) 100%);
+    box-shadow: 0 12px 24px rgba(2, 8, 23, 0.12);
 }
 
 .edu-content h3 {
@@ -1258,9 +1316,9 @@ section::before {
 .contact-content {
     position: relative;
     overflow: hidden;
-    max-width: 900px;
+    max-width: 920px;
     margin: 0 auto;
-    padding: 2.2rem;
+    padding: 2.3rem;
     border-radius: 30px;
     border: 1px solid rgba(162, 184, 212, 0.12);
     background: linear-gradient(180deg, rgba(17, 31, 49, 0.82) 0%, rgba(10, 20, 34, 0.92) 100%);
@@ -1282,9 +1340,30 @@ section::before {
     z-index: 1;
 }
 
+.contact-kicker {
+    margin: 0;
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.contact-heading {
+    max-width: 16ch;
+    margin: 0.7rem auto 0;
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+    line-height: 1.02;
+    letter-spacing: -0.05em;
+}
+
 .contact-intro {
     max-width: 62ch;
-    margin: 0 auto;
+    margin: 1rem auto 0;
     text-align: center;
     color: var(--text-secondary);
     font-size: 1.02rem;
@@ -1306,7 +1385,7 @@ section::before {
     padding: 0.48rem 0.85rem;
     border-radius: 999px;
     border: 1px solid rgba(162, 184, 212, 0.14);
-    background: rgba(7, 17, 29, 0.55);
+    background: rgba(7, 17, 29, 0.42);
     color: var(--text-secondary);
     font-size: 0.83rem;
     font-weight: 700;
@@ -1317,7 +1396,7 @@ section::before {
     justify-content: center;
     flex-wrap: wrap;
     gap: 0.8rem;
-    margin: 1.6rem 0 2rem;
+    margin: 1.85rem 0 2rem;
 }
 
 .contact-methods {
@@ -1485,10 +1564,24 @@ section::before {
     width: 60px;
     height: 60px;
     border-radius: 18px;
+    flex-shrink: 0;
+}
+
+.cert-modal-icon {
     background: linear-gradient(135deg, rgba(98, 232, 255, 0.16) 0%, rgba(255, 190, 107, 0.12) 100%);
     border: 1px solid rgba(162, 184, 212, 0.16);
     font-size: 2rem;
-    flex-shrink: 0;
+}
+
+.project-details-icon {
+    background: linear-gradient(135deg, rgba(98, 232, 255, 0.16) 0%, rgba(255, 190, 107, 0.12) 100%);
+    border: 1px solid rgba(162, 184, 212, 0.16);
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
 }
 
 .cert-modal-header h2,
@@ -1606,7 +1699,7 @@ section::before {
         grid-column: auto;
     }
 
-    .about-highlights {
+    .skills-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
@@ -1708,10 +1801,6 @@ section::before {
         align-items: flex-start;
     }
 
-    .experience-item-featured {
-        padding-top: 3.7rem;
-    }
-
     .exp-date {
         white-space: normal;
     }
@@ -1777,6 +1866,10 @@ section::before {
     .certs-grid,
     .contact-methods {
         grid-template-columns: 1fr;
+    }
+
+    .education-card {
+        max-width: none;
     }
 
     .experience-timeline {
