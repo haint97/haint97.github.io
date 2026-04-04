@@ -1391,6 +1391,7 @@ section::after {
 }
 
 .btn-project-demo,
+.btn-project-github,
 .btn-project-details {
     display: inline-flex;
     align-items: center;
@@ -1414,6 +1415,12 @@ section::after {
     color: var(--text);
 }
 
+.btn-project-github {
+    background: linear-gradient(135deg, rgba(98, 232, 255, 0.18) 0%, rgba(98, 232, 255, 0.08) 100%);
+    border-color: rgba(98, 232, 255, 0.24);
+    color: var(--text);
+}
+
 .btn-project-details {
     background: rgba(7, 17, 29, 0.66);
     color: var(--text-secondary);
@@ -1421,6 +1428,8 @@ section::after {
 
 .btn-project-demo:hover,
 .btn-project-demo:focus-visible,
+.btn-project-github:hover,
+.btn-project-github:focus-visible,
 .btn-project-details:hover,
 .btn-project-details:focus-visible {
     transform: translateY(-2px);
