@@ -50,6 +50,21 @@ const projectsData = {
         tags: ['RAG', 'BM25', 'ChromaDB', 'RAGAS', 'Guardrails', 'Query Expansion', 'Hallucination Detection'],
         video: null,
     },
+    'ai-agents-dev-kits': {
+        icon: 'AGT',
+        title: 'AI Agents Dev Kits',
+        description: 'A dev kit that solves AI agent context loss — preserving institutional knowledge across sessions so agents stop rediscovering the same gotchas and start building on what they already know.',
+        features: [
+            'Identified the core problem: agents are stateless by default, so every new session on a legacy codebase starts blind — same gotchas hit, same 3–5 hour manual exploration repeats.',
+            'Built three autonomous discovery agents (discover-legacy-system, capture-architecture, promote-to-repo-memory) that map a codebase in 15–30 min and push findings into durable /memories/repo/ files.',
+            'Designed a three-tier memory architecture: user memory (personal preferences), session memory (temporary investigation notes), and repository memory (team-shared gotchas, architecture decisions, integration points).',
+            'Structured 13 workflow agents covering the full feature lifecycle — spec → review → plan → tasks → implement → quality gate — for both greenfield (new projects) and brownfield (existing systems).',
+            'Implemented REQ-* → AC-* → TASK-* traceability IDs so every requirement links end-to-end from spec through commit message to code comment, with quality gate checklists at each phase.',
+        ],
+        tags: ['AI Agents', 'Three-Tier Memory', 'Brownfield Discovery', 'Spec-Driven Dev', 'REQ→AC→TASK Traceability', 'Quality Gates', 'Institutional Knowledge', 'Workflow Automation'],
+        video: null,
+        githubUrl: 'https://github.com/thaihai-swe/AI-agents-dev-kits',
+    },
 };
 
 const focusableSelector = [
