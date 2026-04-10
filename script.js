@@ -65,6 +65,21 @@ const projectsData = {
         video: null,
         githubUrl: 'https://github.com/thaihai-swe/AI-agents-dev-kits',
     },
+    'ai-summarizer-extension': {
+        icon: 'EXT',
+        title: 'AI Summarizer Chrome Extension',
+        description: 'A privacy-first Chrome extension that summarizes YouTube videos, webpages, and online courses using pluggable AI providers — cloud or fully local.',
+        features: [
+            'Built a unified provider registry abstracting Gemini, OpenAI, Ollama, and LM Studio behind a single interface — swapping providers requires zero changes to the summarization pipeline.',
+            'Architected a Background Service Worker as the central orchestrator: routes Chrome messages between the Content Script and Side Panel UI, manages streaming chunk delivery, and handles error fallbacks.',
+            'Supports four content types (YouTube transcripts via Transcript API, webpages via DOM parsing, selected text, and Udemy/Coursera courses via CSS selectors) with automatic content-type detection.',
+            'Designed a structured prompt system with 5 tone variations (Simple to Expert), 3 length presets (50–500 words), and 4 summarization modes (Summarize, Analyze, Explain, Debate) — all composable at runtime.',
+            'Privacy-first by design: local providers (Ollama, LM Studio) send zero data to external servers, with auto-generated follow-up questions and persistent per-tab conversation history for deeper exploration.',
+        ],
+
+        video: null,
+        githubUrl: 'https://github.com/thaihai-swe/AI-summarizer-extension',
+    },
 };
 
 const focusableSelector = [
